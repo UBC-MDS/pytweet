@@ -1,7 +1,7 @@
 ## Development Team
-| Name  | GitHub|
+| Name  | GitHub ID |
 | ----- | ----- |
-| Huanhuan Li | [huan-ds](github.com/huan-ds) |
-| Yuanzhe(Marco) Ma | [mmyz88](github.com/mmyz88) |
-| Jared Splinter | [JaredSplinter](github.com/JaredSplinter) |
-| Yuan Xiong | [yuanxiongbear](github.com/yuanxiongbear) |
+| Huanhuan Li | [huan-ds](https://github.com/huan-ds) |
+| Yuanzhe(Marco) Ma | [mmyz88](https://github.com/mmyz88) |
+| Jared Splinter | [JaredSplinter](https://github.com/JaredSplinter) |
+| Yuan Xiong | [yuanxiongbear](https://github.com/yuanxiongbear) |
