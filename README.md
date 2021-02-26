@@ -2,17 +2,31 @@
 
 ![](https://github.com/mmyz88/pytweet/workflows/build/badge.svg) [![codecov](https://codecov.io/gh/mmyz88/pytweet/branch/main/graph/badge.svg)](https://codecov.io/gh/mmyz88/pytweet) ![Release](https://github.com/mmyz88/pytweet/workflows/Release/badge.svg) [![Documentation Status](https://readthedocs.org/projects/pytweet/badge/?version=latest)](https://pytweet.readthedocs.io/en/latest/?badge=latest)
 
-Python package for text analysis and sentiment analysis on tweets
+## Package Overview           
+`pytweet` is a python package for text analysis and sentiment analysis on tweets. The package will allow you to extract tweets from Twitter, visualize the data, and apply sentiment analysis to the data.        
+
+## Features
+
+- `extract`:              
+    - This function extracts tweets from a Twitter feed. 
+
+- `hashtag_viz`:             
+    - This function analyzes tweets contained hashtags and visualizes the analysis of words with hashtags. 
+
+- `emoji_viz`:            
+    - This function analyzes tweets that contained emojis and visualizes the analysis of emojis.
+
+- `sentiment`:              
+    - This function applies sentiment analysis to tweets. It associates words in tweets with positive or negative sentiments.           
+
+## Related Packages           
+There are a few existing Python packages that perform tweets text analysis and sentiment analysis available on PyPI, such as [tweet-scraper](https://pypi.org/project/tweet-scraper/), and [tweet-sentiment](https://pypi.org/project/tweet-sentiment/). Also, there are similar packages available on Github, such as [twitter_sentiment_analysis](https://github.com/namas191297/twitter_sentiment_analysis). However, there are no available packages for hashtag or emoji visualization. 
 
 ## Installation
 
 ```bash
 $ pip install -i https://test.pypi.org/simple/ pytweet
 ```
-
-## Features
-
-- TODO
 
 ## Dependencies
 
