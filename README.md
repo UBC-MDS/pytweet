@@ -7,8 +7,8 @@
 
 ## Features
 
-- `extract`:              
-    - This function extracts tweets from a Twitter feed. 
+- `get_tweets`:              
+    - This function extracts tweets from a Twitter user given their handle (i.e. @elonmusk). 
 
 - `hashtag_viz`:             
     - This function analyzes tweets contained hashtags and visualizes the analysis of words with hashtags. 
