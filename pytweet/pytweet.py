@@ -29,7 +29,8 @@ def get_tweets(handle):
 
 def sentiment_analysis (tweets):
     """
-    This function first trains a Logistic Regression model based on the Natural Languange Processing (NLP) Kit and use this model to do a sentiment study on the given tweets (input).
+    This function first trains a Logistic Regression model based on the Natural Languange Processing (NLP) Kit 
+    and use this model to do a sentiment study on the given tweets (input).
 
     Parameters:
     -----------
@@ -41,5 +42,6 @@ def sentiment_analysis (tweets):
     tweets_senti : dataframe
         A dataframe contains words that are used, sentiment class, and frenquncy. 
     """
+    
     # TODO
     return None
