@@ -85,7 +85,7 @@ def sentiment_analysis(tweets):
     Returns:
     --------
     tweets_df : dataframe
-        A dataframe contains words that are used, sentiment class, and frenquncy.
+        A dataframe contains words that are used, sentiment class, and frequency.
     """
 
     # TODO

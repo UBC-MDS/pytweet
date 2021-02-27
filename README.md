@@ -13,12 +13,12 @@
 - `hashtag_viz`:             
     - This function analyzes tweets contained hashtags and visualizes the analysis of words with hashtags. 
 
-- `emoji_viz`:            
-    - This function analyzes tweets that contained emojis and visualizes the analysis of emojis.
 
 - `sentiment_analysis`:              
     - This function applies sentiment analysis to tweets. It associates tokens in tweets with positive or negative sentiments and calculates their corresponding frequencies.           
 
+- `visualize_sentiment`:            
+    -    This function takes in the output of sentiment_analysis function and creates a visualization of user's tweets with sentimental analysis.
 ## Related Packages           
 There are a few existing Python packages that perform tweets text analysis and sentiment analysis available on PyPI, such as [tweet-scraper](https://pypi.org/project/tweet-scraper/), and [tweet-sentiment](https://pypi.org/project/tweet-sentiment/). Also, there are similar packages available on Github, such as [twitter_sentiment_analysis](https://github.com/namas191297/twitter_sentiment_analysis). However, there are no available packages for hashtag or emoji visualization. 
 
