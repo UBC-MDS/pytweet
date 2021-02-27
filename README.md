@@ -10,9 +10,11 @@
 - `get_tweets`:              
     - This function extracts tweets from a Twitter user given their handle (i.e. @elonmusk). 
 
-- `hashtag_viz`:             
-    - This function analyzes tweets contained hashtags and visualizes the analysis of words with hashtags. 
+- `plot_timeline`:             
+    - This function creates an analysis of what time of day the tweets occurs and plots the counts of tweets and hours. 
 
+- `plot_hashtags`:             
+    - This function creates an analysis of the hashtags in tweets, and plots the hashtag analysis.
 
 - `sentiment_analysis`:              
     - This function applies sentiment analysis to tweets. It associates tokens in tweets with positive or negative sentiments and calculates their corresponding frequencies.           
