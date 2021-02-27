@@ -25,3 +25,48 @@ def get_tweets(handle):
 
     # TODO
     return None
+
+def plot_timeline(df, time):
+    """
+    Analysis what time of day the tweets occurs and plot the 
+    counts of tweets versus hours. 
+
+    Parameters:
+    -----------
+    df : dataframe
+        A dataframe of the user's tweets, which contains time.
+
+    time: string
+        The column name of post time in dataframe.
+
+    Returns:
+    --------
+    plot: chart 
+        A chart plotting the counts of tweets versus hours.
+    """
+
+    # TODO
+    return None
+
+
+def plot_hashtags(df, tweet):
+    """
+    Analysis the hashtags in tweets, and plot the hashtag 
+    analysis.
+
+    Parameters:
+    -----------
+    df : dataframe
+        A dataframe of the user's tweets.
+
+    tweet: string
+        The column name of tweet text in dataframe.
+
+    Returns:
+    --------
+    plot: chart 
+        A chart plotting analysis result of using hashtags.
+    """
+
+    # TODO
+    return None
