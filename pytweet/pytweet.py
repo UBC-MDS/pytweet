@@ -43,21 +43,3 @@ def sentiment_analysis (tweets):
     """
     # TODO
     return None
-
-
-def sentiment_plot (tweets_senti):
-        """
-    This function creats a wordcloud plot based on the tweets_senti data (input).
-
-    Parameters:
-    -----------
-    tweets_senti : dataframe
-        A dataframe contains words that are used, sentiment class, and frenquncy. 
-
-    Returns:
-    --------
-    senti_plots : plot
-        Three plots of wordcloud that correponds to all tweets, tweets with positive sentiment and tweets with negative sentiment.
-    """
-    # TODO
-    return None
