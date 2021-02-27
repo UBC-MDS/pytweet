@@ -29,6 +29,48 @@ def get_tweets(handle, n_tweets=-1):
     # TODO
     return None
 
+def plot_timeline(df, time):
+    """
+    Analysis what time of day the tweets occurs and plot the 
+    counts of tweets versus hours. 
+
+    Parameters:
+    -----------
+    tweets : dataframe
+        A dataframe of the user's tweets, and the sent times.
+    time: string
+        The column name of post time in dataframe.
+
+    Returns:
+    --------
+    plot: chart 
+        A chart plotting the counts of tweets versus hours.
+    """
+    
+    # TODO
+    return None
+
+def plot_hashtags(df, tweet):
+    """
+    Analysis the hashtags in tweets, and plot the hashtag 
+    analysis.
+
+    Parameters:
+    -----------
+    tweets : dataframe
+        A dataframe of the user's tweets.
+
+    tweet: string
+        The column name of tweet text in dataframe.
+
+    Returns:
+    --------
+    plot: chart 
+        A chart plotting analysis result of using hashtags.
+    """
+      
+    # TODO
+    return None  
 
 def sentiment_analysis(tweets):
     """
@@ -42,13 +84,12 @@ def sentiment_analysis(tweets):
 
     Returns:
     --------
-    tweets_senti : dataframe
-        A dataframe contains words that are used, sentiment class, and frenquncy.
+    tweets_df : dataframe
+        A dataframe contains words that are used, sentiment class, and frequency.
     """
 
     # TODO
     return None
-
 
 def visualize_sentiment(sentiment_df):
     """
@@ -67,5 +108,6 @@ def visualize_sentiment(sentiment_df):
         A bar plot of the user's tweets containing in order
         the most common words, colour coded by the word's sentiment class.
     """
+
     # TODO
     return None
