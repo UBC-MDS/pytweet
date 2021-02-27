@@ -22,7 +22,7 @@
 - `visualize_sentiment`:            
     -    This function takes in the output of sentiment_analysis function and creates a visualization of user's tweets with sentimental analysis.
 ## Related Packages           
-There are a few existing Python packages that perform tweets text analysis and sentiment analysis available on PyPI, such as [tweet-scraper](https://pypi.org/project/tweet-scraper/), and [tweet-sentiment](https://pypi.org/project/tweet-sentiment/). Also, there are similar packages available on Github, such as [twitter_sentiment_analysis](https://github.com/namas191297/twitter_sentiment_analysis). However, there are no available packages for hashtag or emoji visualization. 
+There are a few existing Python packages that perform tweets text analysis and sentiment analysis available on PyPI, such as [tweet-scraper](https://pypi.org/project/tweet-scraper/), and [tweet-sentiment](https://pypi.org/project/tweet-sentiment/). Also, there are similar packages available on Github, such as [twitter_sentiment_analysis](https://github.com/namas191297/twitter_sentiment_analysis). However, there are no available packages for hashtag or timeline visualization. 
 
 ## Installation
 
