@@ -38,6 +38,22 @@ $ pip install -i https://test.pypi.org/simple/ pytweet
 
 - TODO
 
+## Example Usage Scenario
+```
+from pytweet.pytweet import plot_timeline
+import pandas as pd
+
+plot_timeline(tweet_data, time_col)
+```
+![](./img/timeline_plot.png)
+
+```
+from pytweet.pytweet import plot_hashtags
+import pandas as pd
+import re
+plot_hashtags(tweet_data, text_col)
+```
+![](./img/hashtag_plot.png)
 ## Documentation
 
 The official documentation is hosted on Read the Docs: https://pytweet.readthedocs.io/en/latest/

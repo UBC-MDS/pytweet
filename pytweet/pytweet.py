@@ -2,9 +2,12 @@
 # date: Feb-Mar 2021
 
 import tweepy
-from tweepy import TweepError
 import os
 import pandas as pd
+import altair as alt
+import re
+from datetime import datetime
+from tweepy import TweepError
 
 def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
     """
@@ -86,7 +89,7 @@ def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
     return output
 
 
-def plot_timeline(df, time):
+def plot_timeline(df, time_col):
     """
     Analysis what time of day the tweets occurs and plot the
     counts of tweets versus hours. 
@@ -104,10 +107,26 @@ def plot_timeline(df, time):
         A chart plotting the counts of tweets versus hours.
     """
 
-    # TODO
-    return None
+    # Checking for valid inputs
+    if not isinstance(df, pd.DataFrame):
+        raise Exception("The value of the argument 'df' must be " \
+                        "type of dataframe.")
+    if type(time_col) != str:
+        raise Exception("The value of the argument 'time_col' must be " \
+                        "type of string")
+    
+    # extract hour from time column
+    df['time'] = df[time_col].apply(lambda x: datetime.strptime(x, "%m/%d/%Y %H:%M"))
+    df['hour'] = df['time'].apply(lambda x: x.hour)
+    
+    # timeline plot
+    timeline_plot = alt.Chart(df).mark_line().encode(
+        x=alt.X('hour', title = "Hour of day"),
+        y=alt.Y('count()',title = "Counts of Tweets")).properties(title='Tweet Timeline Analysis')
+    return timeline_plot
 
-def plot_hashtags(df, tweet):
+
+def plot_hashtags(df, text_col):
     """
     Analysis the hashtags in tweets, and plot the hashtag
     analysis.
@@ -125,9 +144,33 @@ def plot_hashtags(df, tweet):
     plot: chart
         A chart plotting analysis result of using hashtags.
     """
+    
+    #extract hashtags from text
+    df['hashtags'] = df[text_col].apply(lambda x: re.findall(r'[#] \w+', x))
+    
+    # count hashtags
+    hashtag_dict = {}
+    for hashtags in df["hashtags"]:
+        for word in hashtags:
+            hashtag_dict[word] = hashtag_dict.get(word, 0) + 1
 
-    # TODO
-    return None
+    hashtag_df = pd.DataFrame(columns = ['Keyword', 'Count'])
+    for key, value in hashtag_dict.items():
+        key_value = [[key, value]]
+        hashtag_df = hashtag_df.append(pd.DataFrame(key_value, columns=['Keyword', 'Count']),\
+                                       ignore_index=True)
+    
+    # hashtag frequency plot
+    hashtag_plot = alt.Chart(hashtag_df).mark_bar().encode(
+        x=alt.X('Count', title = "Hashtags"),
+        y=alt.Y('Keyword',title = "Count of Hashtags",
+                 sort = '-x')
+        ).properties(title='Top 15 Hashtag Analysis'
+        ).transform_window(rank='rank(Count)',
+                           sort=[alt.SortField('Count', order='descending')]
+        ).transform_filter((alt.datum.rank <= 15)
+    )
+    return hashtag_plot
 
 def sentiment_analysis(tweets):
     """

@@ -7,6 +7,9 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
+pandas = "^1.2.3"
+altair = "^4.1.0"
+DateTime = "^4.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
