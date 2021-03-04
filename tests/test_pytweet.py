@@ -49,7 +49,7 @@ def test_plot_timeline():
 
     # Test the plot attributes 
     plot = plot_timeline(data, 'date')
-    assert plot.encoding.x.shorthand == 'hour', \
-        'The function must return an altair plot' 
-    assert plot.encoding.y.shorthand == 'count()', \
-        'The function must return an altair plot'   
+    assert plot.encoding.x.shorthand == 'hour', 'x_axis should be mapped to the x axis'
+    assert plot.encoding.y.shorthand == 'count()', 'y_axis should be mapped to the x axis'  
+    assert plot.mark == 'line', 'mark should be a line'
+    

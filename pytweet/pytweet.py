@@ -64,7 +64,7 @@ def plot_timeline(df, time_col):
     # timeline plot
     timeline_plot = alt.Chart(df).mark_line().encode(
         x=alt.X('hour', title = "Hour of day"),
-        y=alt.Y('count()',title = "Counts of Tweets")).properties(title='Tweet Timeline analysis')
+        y=alt.Y('count()',title = "Counts of Tweets")).properties(title='Tweet Timeline Analysis')
     return timeline_plot
 
 def plot_hashtags(df, tweet):
