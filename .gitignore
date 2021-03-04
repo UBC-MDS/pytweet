@@ -138,5 +138,6 @@ dmypy.json
 **.Rproj
 **.Rhistory
 
-# other
+# other for pytweet
 .DS_Store
+**.ipynb

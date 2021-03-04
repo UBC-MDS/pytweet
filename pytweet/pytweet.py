@@ -1,42 +1,97 @@
 # authors: Huanhuan Li, Yuanzhe(Marco) Ma, Jared Splinter, Yuan Xiong
-# date: Feb 2021
+# date: Feb-Mar 2021
+
+import tweepy
+import os
 import pandas as pd
 import altair as alt
-from datetime import datetime
 import re
+from datetime import datetime
+from tweepy import TweepError
 
-
-# Twitter API credentials
-consumer_key = ""
-consumer_secret = ""
-access_key = ""
-access_secret = ""
-
-def get_tweets(handle, n_tweets=-1):
+def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
     """
     Retreives all tweets of a user given their Twitter handle
-    (i.e. @elonmusk) through the Twitter API.
+    (i.e. @elonmusk) through Twitter API. User must have API 
+    keys and secrets stored as os environment variables.
+
+    Parts of the function references Brown University CSCI0931's
+    lecture notes: https://cs.brown.edu/courses/csci0931/2015-fall/3-synthesis/LEC3-5.pdf
 
     Parameters:
     -----------
     handle : string
-        The Twitter handle of the user, or aka the username.
+        The Twitter handle of the user, aka the username.
     n_tweets : number
-        The total number of tweets you want to retreive from the user.
-        By default, n_tweets=-1 means retrieving all tweets. 
+        The total number of tweets to retreive. Must be positive.
+        By default, n_tweets=-1 retrieves all tweets.
+    include_replies : boolean
+        Whether or not to downloaded the users replies
+        in addition to original tweets/retweets.
+    verbose : boolean
+        Whether or not to print out the progress during the fetch.
 
     Returns:
     --------
     tweets : dataframe
         A dataframe of the user's tweets, and the sent times.
     """
+
+    # check argument validity
+    if not(isinstance(handle, str)):
+        raise TypeError('Invalid argument type: handle must be a string.')
+    elif not(isinstance(n_tweets, int) and n_tweets >= -1):
+        raise TypeError('Invalid argument: input n_tweets must be >= 0.')
+    elif not(isinstance(include_replies, bool)):
+        raise TypeError('Invalid argument type: include_replies must be boolean.')
+    elif not(isinstance(verbose, bool)):
+        raise TypeError('Invalid argument type: verbose must be boolean.')
+
+    # Twitter API credentials
+    try:
+        consumer_key = os.environ.get('TWITTER_CONS_KEY')
+        consumer_secret = os.environ.get('TWITTER_CONS_SEC')
+        access_key = os.environ.get('TWITTER_ACCS_KEY')
+        access_secret = os.environ.get('TWITTER_ACCS_SEC')
+    except KeyError:
+        raise Exception('Need authentication tokens! Please make sure you have those as environment variables.')
+
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_key, access_secret)
+    api = tweepy.API(auth)
+
+    # get first batch of tweets
+    tweets = []
+    latest = api.user_timeline(screen_name=handle,
+                               exclude_replies=not(include_replies),
+                               count=200)  # max count per request is 200
     
-    # TODO
-    return None
+    tweets.extend(latest)
+
+    # request recursively to get all tweets/n_tweets
+    oldest = latest[-1].id
+    while(len(latest) > 0 and len(tweets) < n_tweets):
+        latest = api.user_timeline(screen_name=handle, 
+                                   exclude_replies=not(include_replies), 
+                                   count=200, max_id=oldest)
+        tweets.extend(latest)
+        oldest = latest[-1].id
+
+        if verbose:
+            print(f"{len(tweets)} tweets downloaded")
+
+    # format output dataframe
+    output = pd.DataFrame([[tweet.created_at, tweet.text] for tweet in tweets],
+                          columns=['time', 'tweet'])
+    if n_tweets != -1:
+        output = output[:n_tweets]
+
+    return output
+
 
 def plot_timeline(df, time_col):
     """
-    Analysis what time of day the tweets occurs and plot the 
+    Analysis what time of day the tweets occurs and plot the
     counts of tweets versus hours. 
 
     Parameters:
@@ -48,9 +103,10 @@ def plot_timeline(df, time_col):
 
     Returns:
     --------
-    plot: chart 
+    plot: chart
         A chart plotting the counts of tweets versus hours.
     """
+
     # Checking for valid inputs
     if not isinstance(df, pd.DataFrame):
         raise Exception("The value of the argument 'df' must be " \
@@ -69,9 +125,10 @@ def plot_timeline(df, time_col):
         y=alt.Y('count()',title = "Counts of Tweets")).properties(title='Tweet Timeline Analysis')
     return timeline_plot
 
+
 def plot_hashtags(df, text_col):
     """
-    Analysis the hashtags in tweets, and plot the hashtag 
+    Analysis the hashtags in tweets, and plot the hashtag
     analysis.
 
     Parameters:
@@ -84,9 +141,10 @@ def plot_hashtags(df, text_col):
 
     Returns:
     --------
-    plot: chart 
+    plot: chart
         A chart plotting analysis result of using hashtags.
     """
+    
     #extract hashtags from text
     df['hashtags'] = df[text_col].apply(lambda x: re.findall(r'[#] \w+', x))
     
