@@ -43,7 +43,7 @@ $ pip install -i https://test.pypi.org/simple/ pytweet
 from pytweet.pytweet import plot_timeline
 import pandas as pd
 
-timeline_plot(tweet_data, time_col)
+plot_timeline(tweet_data, time_col)
 ```
 ![](./img/timeline_plot.png)
 
