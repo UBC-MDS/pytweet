@@ -103,7 +103,7 @@ def test_plot_timeline():
     # Test the Exception is correctly raised when the type of 
     # arguments are wrong
     with raises(Exception) as e:
-        plot_timeline('', 'date')
+        plot_timeline('', 'time')
         assert str(e.value) == "The value of the argument 'df' " \
                            "must be type of dataframe."
     
@@ -113,7 +113,7 @@ def test_plot_timeline():
                            "type of string"
 
     # Test the plot attributes 
-    plot = plot_timeline(data, 'date')
+    plot = plot_timeline(data, 'time')
     assert plot.encoding.x.shorthand == 'hour', 'x_axis should be mapped to the x axis'
     assert plot.encoding.y.shorthand == 'count()', 'y_axis should be mapped to the y axis'  
     assert plot.mark == 'line', 'mark should be a line'
@@ -134,7 +134,7 @@ def test_plot_hashtags():
     # TODO
 
     # Test the plot attributes 
-    plot = plot_hashtags(data, 'content')
+    plot = plot_hashtags(data, 'tweet')
     assert plot.encoding.x.shorthand == 'Count', 'x_axis should be mapped to the x axis'
     assert plot.encoding.y.shorthand == 'Keyword', 'y_axis should be mapped to the y axis'  
     assert plot.mark == 'bar', 'mark should be a bar'

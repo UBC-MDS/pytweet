@@ -211,3 +211,15 @@ def visualize_sentiment(sentiment_df):
 
     # TODO
     return None
+
+## for generate toydata
+#output = get_tweets('@pytweetGod')
+#output.to_csv("../tests/toy_data.csv")
+
+## for generate plots
+#import altair_saver
+#tweet_data = pd.read_csv("../tests/trumptweets-test.csv")
+#timeline = plot_timeline(tweet_data, 'time')
+#timeline.save('../img/timeline_plot.html')
+#hashtags = plot_hashtags(tweet_data, 'tweet')
+#hashtags.save('../img/hashtag_plot.html')
