@@ -40,13 +40,13 @@ def test_plot_timeline():
     # Test the Exception is correctly raised when the type of 
     # arguments are wrong
     with pytest.raises(Exception) as e:
-        assert plot_timeline('', 'date')
-    assert str(e.value) == "The value of the argument 'df' " \
+        plot_timeline('', 'date')
+        assert str(e.value) == "The value of the argument 'df' " \
                            "must be type of dataframe."
     
     with pytest.raises(Exception) as e:
-        assert plot_timeline(data, 123)
-    assert str(e.value) == "The value of the argument 'time_col' must be " \
+        plot_timeline(data, 123)
+        assert str(e.value) == "The value of the argument 'time_col' must be " \
                            "type of string"
 
     # Test the plot attributes 
