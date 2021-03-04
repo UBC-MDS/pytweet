@@ -2,34 +2,49 @@
 # date: Feb 2021
 
 import tweepy
+from tweepy import TweepError
 import os
 import pandas as pd
 
 def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
     """
     Retreives all tweets of a user given their Twitter handle
-    (i.e. @elonmusk) through the Twitter API.
+    (i.e. @elonmusk) through Twitter API.
 
-    Parts of the function references to https://gist.github.com/yanofsky/5436496
+    User must have Twitter API tokens and secrets stored as os
+    environment variables.
+
+    Parts of the function references Brown University CSCI0931's
+    lecture notes: https://cs.brown.edu/courses/csci0931/2015-fall/3-synthesis/LEC3-5.pdf
 
     Parameters:
     -----------
     handle : string
-        The Twitter handle of the user, or aka the username.
+        The Twitter handle of the user, aka the username.
     n_tweets : number
-        The total number of tweets you want to retreive from the user.
-        By default, n_tweets=-1 means retrieving all tweets.
+        The total number of tweets to retreive. Must be positive.
+        By default, n_tweets=-1 retrieves all tweets.
     include_replies : boolean
-        Whether or not the to downloaded the users replies
+        Whether or not to downloaded the users replies
         in addition to original tweets/retweets.
     verbose : boolean
-        Whether to print out progress during the retrieval.
+        Whether or not to print out the progress during the fetch.
 
     Returns:
     --------
     tweets : dataframe
         A dataframe of the user's tweets, and the sent times.
     """
+
+    # check argument validity
+    if not(isinstance(handle, str)):
+        raise TypeError('Invalid argument type: handle must be a string.')
+    elif not(isinstance(n_tweets, int) and n_tweets >= -1):
+        raise TypeError('Invalid argument: input n_tweets must be >= 0.')
+    elif not(isinstance(include_replies, bool)):
+        raise TypeError('Invalid argument type: include_replies must be boolean.')
+    elif not(isinstance(verbose, bool)):
+        raise TypeError('Invalid argument type: verbose must be boolean.')
 
     # Twitter API credentials
     try:
@@ -44,13 +59,17 @@ def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
     auth.set_access_token(access_key, access_secret)
     api = tweepy.API(auth)
 
+    # get first batch of tweets
     tweets = []
-    latest = api.user_timeline(screen_name=handle,
-                               exclude_replies=not(include_replies),
-                               count=200)  # max count per request is 200
+    try:
+        latest = api.user_timeline(screen_name=handle,
+                                   exclude_replies=not(include_replies),
+                                   count=200)  # max count per request is 200
+    except TweepError:
+        raise Exception('User does not exist.')
     tweets.extend(latest)
 
-    # start calling recursively to get all tweets
+    # request recursively to get all tweets/n_tweets
     oldest = latest[-1].id
     while(len(latest) > 0 and len(tweets) < n_tweets):
         latest = api.user_timeline(screen_name=handle, 
@@ -85,16 +104,16 @@ def plot_timeline(df, time):
 
     Returns:
     --------
-    plot: chart 
+    plot: chart
         A chart plotting the counts of tweets versus hours.
     """
-    
+
     # TODO
     return None
 
 def plot_hashtags(df, tweet):
     """
-    Analysis the hashtags in tweets, and plot the hashtag 
+    Analysis the hashtags in tweets, and plot the hashtag
     analysis.
 
     Parameters:
@@ -107,12 +126,12 @@ def plot_hashtags(df, tweet):
 
     Returns:
     --------
-    plot: chart 
+    plot: chart
         A chart plotting analysis result of using hashtags.
     """
-      
+
     # TODO
-    return None  
+    return None
 
 def sentiment_analysis(tweets):
     """
