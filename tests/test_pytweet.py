@@ -41,22 +41,26 @@ def test_get_tweets():
 def test_get_tweets_error():
 
     # test invalid handle
-    with raises(TypeError):
+    with raises(TypeError) as e:
         get_tweets(object('elon'))
+        assert str(e.value) == 'Invalid argument type: handle must be a string.'
 
     # test invalid n_tweets
-    with raises(TypeError):
+    with raises(TypeError) as e:
         get_tweets('elonmusk', n_tweets='football')
+        assert str(e.value) == 'Invalid argument: input n_tweets must be >= 0.'
 
     # test invalid include_replies
-    with raises(TypeError):
+    with raises(TypeError) as e:
         get_tweets('elonmusk', include_replies=3)
+        assert str(e.value) == 'Invalid argument type: include_replies must be boolean.'
 
     # test invalid verbose
-    with raises(TypeError):
+    with raises(TypeError) as e:
         get_tweets('elonmusk', verbose='nah')
+        assert str(e.value) == 'Invalid argument type: verbose must be boolean.'
 
     # test non-existent user
     with raises(Exception):
         result = get_tweets('A%@F)UFJSL', n_tweets=20)
-
+        assert str(e.value) == 'User does not exist.'
