@@ -1,5 +1,8 @@
 # authors: Huanhuan Li, Yuanzhe(Marco) Ma, Jared Splinter, Yuan Xiong
 # date: Feb 2021
+import pandas as pd
+import altair as alt
+from datetime import datetime
 
 # Twitter API credentials
 consumer_key = ""
@@ -29,7 +32,7 @@ def get_tweets(handle, n_tweets=-1):
     # TODO
     return None
 
-def plot_timeline(df, time):
+def plot_timeline(df, time_col):
     """
     Analysis what time of day the tweets occurs and plot the 
     counts of tweets versus hours. 
@@ -46,9 +49,23 @@ def plot_timeline(df, time):
     plot: chart 
         A chart plotting the counts of tweets versus hours.
     """
+    # Checking for valid inputs
+    if not isinstance(df, pd.DataFrame):
+        raise Exception("The value of the argument 'df' must be " \
+                        "type of dataframe.")
+    if type(time_col) != str:
+        raise Exception("The value of the argument 'time_col' must be " \
+                        "type of string")
     
-    # TODO
-    return None
+    # extract hour from time column
+    df['time'] = df[time_col].apply(lambda x: datetime.strptime(x, "%m/%d/%Y %H:%M"))
+    df['hour'] = df['time'].apply(lambda x: x.hour)
+    
+    # timeline plot
+    timeline_plot = alt.Chart(df).mark_line().encode(
+        x=alt.X('hour', title = "Hour of day"),
+        y=alt.Y('count()',title = "Counts of Tweets")).properties(title='Tweet Timeline analysis')
+    return timeline_plot
 
 def plot_hashtags(df, tweet):
     """
