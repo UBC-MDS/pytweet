@@ -1,5 +1,5 @@
 # authors: Huanhuan Li, Yuanzhe(Marco) Ma, Jared Splinter, Yuan Xiong
-# date: Feb 2021
+# date: Feb-Mar 2021
 
 import tweepy
 from tweepy import TweepError
@@ -9,10 +9,8 @@ import pandas as pd
 def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
     """
     Retreives all tweets of a user given their Twitter handle
-    (i.e. @elonmusk) through Twitter API.
-
-    User must have Twitter API tokens and secrets stored as os
-    environment variables.
+    (i.e. @elonmusk) through Twitter API. User must have API 
+    keys and secrets stored as os environment variables.
 
     Parts of the function references Brown University CSCI0931's
     lecture notes: https://cs.brown.edu/courses/csci0931/2015-fall/3-synthesis/LEC3-5.pdf
@@ -61,12 +59,10 @@ def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
 
     # get first batch of tweets
     tweets = []
-    try:
-        latest = api.user_timeline(screen_name=handle,
-                                   exclude_replies=not(include_replies),
-                                   count=200)  # max count per request is 200
-    except TweepError:
-        raise Exception('User does not exist.')
+    latest = api.user_timeline(screen_name=handle,
+                               exclude_replies=not(include_replies),
+                               count=200)  # max count per request is 200
+    
     tweets.extend(latest)
 
     # request recursively to get all tweets/n_tweets
@@ -86,7 +82,7 @@ def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
                           columns=['time', 'tweet'])
     if n_tweets != -1:
         output = output[:n_tweets]
-        
+
     return output
 
 

@@ -1,12 +1,14 @@
-from pytweet import __version__
+# authors: Huanhuan Li, Yuanzhe(Marco) Ma, Jared Splinter, Yuan Xiong
+# date: Feb-Mar 2021
+
 import pandas as pd
+from pytweet import __version__
+from tweepy import TweepError
 from pytweet.pytweet import get_tweets
 from pytest import raises
-# import pytest
 
 def test_version():
     assert __version__ == '0.1.0'
-
 
 def test_get_tweets():
     """
@@ -39,7 +41,11 @@ def test_get_tweets():
 
 
 def test_get_tweets_error():
+    """
+    Test error cases and error messages thrown by get_tweets.
 
+    5 tests in total.
+    """
     # test invalid handle
     with raises(TypeError) as e:
         get_tweets(object('elon'))
@@ -61,6 +67,5 @@ def test_get_tweets_error():
         assert str(e.value) == 'Invalid argument type: verbose must be boolean.'
 
     # test non-existent user
-    with raises(Exception):
+    with raises(TweepError):
         result = get_tweets('A%@F)UFJSL', n_tweets=20)
-        assert str(e.value) == 'User does not exist.'
