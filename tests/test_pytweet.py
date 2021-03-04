@@ -7,19 +7,21 @@ def test_version():
 
 def test_get_tweets():
     # test output format
-    df = get_tweets('@ShawnMendes')
-    assert type(df) == 'Pandas Dataframe'
-    assert columns(df) == ['ID', 'Time', 'Text']
+    result = get_tweets('@ShawnMendes')
+    assert type(result) == pd.core.frame.DataFrame
+    assert columns(result) == ['ID', 'Time', 'Text']
+    assert len(result) > 0 # existing user
 
     # test output status
     assert get_tweets.status == 200
 
-    # test output length
+    # test specified n_tweets
     n_tweets = 35
-    df = get_tweets('@ShawnMendes', n_tweets=n_tweets)
-    assert df.shape[0] == n_tweets
+    result = get_tweets('@ShawnMendes', n_tweets=n_tweets)
+    assert result.shape[0] == n_tweets
 
-def test_your:
-    df = get_tweets
+    # test non-existent user
+    result = get_tweets('A%@F)UFJSL', n_tweets=20)
+    assert len(result) == 0
 
-    df 
+# def test_get_tweets_error():
