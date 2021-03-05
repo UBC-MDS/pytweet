@@ -131,7 +131,15 @@ def test_plot_hashtags():
 
     # Test the Exception is correctly raised when the type of 
     # arguments are wrong
-    # TODO
+    with raises(Exception) as e:
+        plot_hashtags('', 'tweet')
+        assert str(e.value) == "The value of the argument 'df' " \
+                           "must be type of dataframe."
+    
+    with raises(Exception) as e:
+        plot_hashtags(data, 123)
+        assert str(e.value) == "The value of the argument 'text_col' must be " \
+                           "type of string"
 
     # Test the plot attributes 
     plot = plot_hashtags(data, 'tweet')

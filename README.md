@@ -14,7 +14,7 @@
     - This function creates an analysis of what time of day the tweets occurs and plots the counts of tweets and hours. 
 
 - `plot_hashtags`:             
-    - This function creates an analysis of the hashtags in tweets, and plots the hashtag analysis.
+    - This function creates an analysis of the hashtags in tweets, and plots the most frequently used hashtag words.
 
 - `sentiment_analysis`:              
     - This function applies sentiment analysis to tweets. It associates tokens in tweets with positive or negative sentiments and calculates their corresponding frequencies.           
@@ -43,6 +43,22 @@ $ pip install -i https://test.pypi.org/simple/ pytweet
 from pytweet.pytweet import plot_timeline
 import pandas as pd
 
+def helper_create_data():
+    """
+    Helper function for creating dataframe for testing
+    Parameters
+    -----------
+    Returns
+    --------
+    pandas.DataFrame
+        Returns a dataframe to be used for testing
+    Examples
+    ---------
+    >>> helper_create_data()
+    """
+    tweet_data = pd.read_csv("./tests/trumptweets-test.csv")
+    return tweet_data
+
 plot_timeline(tweet_data, time_col)
 ```
 ![](./img/timeline_plot.png)
@@ -51,6 +67,7 @@ plot_timeline(tweet_data, time_col)
 from pytweet.pytweet import plot_hashtags
 import pandas as pd
 import re
+
 plot_hashtags(tweet_data, text_col)
 ```
 ![](./img/hashtag_plot.png)
