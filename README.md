@@ -59,7 +59,8 @@ def helper_create_data():
     tweet_data = pd.read_csv("./tests/trumptweets-test.csv")
     return tweet_data
 
-plot_timeline(tweet_data, time_col)
+data = helper_create_data()
+plot_timeline(data, 'time')
 ```
 ![](./img/timeline_plot.png)
 
@@ -68,7 +69,7 @@ from pytweet.pytweet import plot_hashtags
 import pandas as pd
 import re
 
-plot_hashtags(tweet_data, text_col)
+plot_hashtags(data, 'tweet')
 ```
 ![](./img/hashtag_plot.png)
 ## Documentation
