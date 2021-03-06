@@ -39,7 +39,7 @@ $ pip install -i https://test.pypi.org/simple/ pytweet
 import pytweet
 import pandas as pd
 
-pytweet.get_tweets('@BrunoMars', n_tweets=20)
+pytweet.get_tweets('@BrunoMars', n_tweets=8)
 ```
 ```
 >                   time                                              tweet
@@ -55,12 +55,12 @@ pytweet.get_tweets('@BrunoMars', n_tweets=20)
 ```
 ```Python
 tweet_data = pytweet.get_tweets('@BrunoMars')
-plot_timeline(tweet_data, time_col)
+plot_timeline(tweet_data, 'time')
 ```
 ![](./img/timeline_plot.png)
 
 ```Python
-plot_hashtags(tweet_data, text_col)
+plot_hashtags(tweet_data, 'tweet')
 ```
 ![](./img/hashtag_plot.png)
 ## Documentation
