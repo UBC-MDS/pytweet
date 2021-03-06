@@ -124,7 +124,7 @@ def plot_timeline(df, time_col):
                         "type of string")
     
     # extract hour from time column
-    df['time'] = df[time_col].apply(lambda x: datetime.strptime(x, "%m/%d/%Y %H:%M"))
+    df['time'] = df[time_col].apply(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S"))
     df['hour'] = df['time'].apply(lambda x: x.hour)
     
     # timeline plot
@@ -150,11 +150,18 @@ def plot_hashtags(df, text_col):
     Returns:
     --------
     plot: chart
-        A chart plotting analysis result of using hashtags.
+        A chart plotting analysis result of most frequent used hashtag words.
     """
+    # Checking for valid inputs
+    if not isinstance(df, pd.DataFrame):
+        raise Exception("The value of the argument 'df' must be " \
+                        "type of dataframe.")
+    if type(text_col) != str:
+        raise Exception("The value of the argument 'text_col' must be " \
+                        "type of string")
     
     #extract hashtags from text
-    df['hashtags'] = df[text_col].apply(lambda x: re.findall(r'[#] \w+', x))
+    df['hashtags'] = df[text_col].apply(lambda x: re.findall(r'[#]\w+', x))
     
     # count hashtags
     hashtag_dict = {}
@@ -173,7 +180,7 @@ def plot_hashtags(df, text_col):
         x=alt.X('Count', title = "Hashtags"),
         y=alt.Y('Keyword',title = "Count of Hashtags",
                  sort = '-x')
-        ).properties(title='Top 15 Hashtag Analysis'
+        ).properties(title='Top 15 Hashtag Words'
         ).transform_window(rank='rank(Count)',
                            sort=[alt.SortField('Count', order='descending')]
         ).transform_filter((alt.datum.rank <= 15)
@@ -337,12 +344,12 @@ def visualize_sentiment(sentiment_df, plot_type = "Standard"):
 
 
 ## for generate toydata
-#output = get_tweets('@pytweetGod')
-#output.to_csv("../tests/toy_data.csv")
+#output = get_tweets('@BrunoMars', n_tweets=500)
+#output.to_csv("../tests/brunomars_data.csv")
 
 ## for generate plots
 #import altair_saver
-#tweet_data = pd.read_csv("../tests/trumptweets-test.csv")
+#tweet_data = pd.read_csv("../tests/brunomars_data.csv")
 #timeline = plot_timeline(tweet_data, 'time')
 #timeline.save('../img/timeline_plot.html')
 #hashtags = plot_hashtags(tweet_data, 'tweet')
