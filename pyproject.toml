@@ -11,6 +11,8 @@ pandas = "^1.2.3"
 altair = "^4.1.0"
 DateTime = "^4.3"
 tweepy = "^3.10.0"
+textblob = "^0.15.3"
+sklearn = "^0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
