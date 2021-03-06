@@ -35,17 +35,30 @@ $ pip install -i https://test.pypi.org/simple/ pytweet
 - TODO
 
 ## Usage
+```Python
+import pytweet
+import pandas as pd
 
-- TODO
-
-## Example Usage Scenario
+pytweet.get_tweets('@BrunoMars', n_tweets=8)
 ```
+```
+>                   time                                              tweet
+> 0  2021-03-06 04:39:46              ✨✨✨✨✨✨✨✨✨✨✨✨✨ https://t.co/ElGgeZ7B9c
+> 1  2021-03-05 20:41:06  ✨ #SilkSonic #LeaveTheDoorOpen @AndersonPaak @...
+> 2  2021-03-05 20:31:45                                                  👀
+> 3  2021-03-05 05:18:36  ✨ #SilkSonic song and video out now✨ #LeaveThe...
+> 4  2021-03-05 03:14:22                                         #SilkSonic
+> 5  2021-03-03 20:48:20        Just posted a photo https://t.co/wPsxKeCAWH
+> 6  2021-03-02 19:32:41  Lacoste: “Bruno, if you want the clothes to se...
+> 7  2021-03-02 16:03:35  Alright i’ll be back. I gotta go approve some ...
+```
+```Python
 tweet_data = pytweet.get_tweets('@BrunoMars', n_tweets=500)
 pytweet.plot_timeline(tweet_data, 'time')
 ```
 ![](./img/timeline_plot.png)
 
-```
+```Python
 pytweet.plot_hashtags(tweet_data, 'tweet')
 ```
 ![](./img/hashtag_plot.png)
