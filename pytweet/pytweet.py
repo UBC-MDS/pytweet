@@ -192,28 +192,29 @@ def tweet_sentiment_analysis(tweets):
 
     Returns:
     --------
-    tweets : dataframe
-        A replacement dataframe of the input that has 'sentiment' category and related score informations. 
+    tweets_senti : dataframe
+        A new dataframe that has added 'sentiment' category and related score informations onto the input dataframe. 
     """
-    tweets[['polarity', 'subjectivity']] = tweets['tweet'].apply(lambda Text: pd.Series(TextBlob(Text).sentiment))
-    for index, row in tweets['tweet'].iteritems():
+    tweets_senti = tweets
+    tweets_senti[['polarity', 'subjectivity']] = tweets_senti['tweet'].apply(lambda Text: pd.Series(TextBlob(Text).sentiment))
+    for index, row in tweets_senti['tweet'].iteritems():
         score = SentimentIntensityAnalyzer().polarity_scores(row)
         neg = score['neg']
         neu = score['neu']
         pos = score['pos']
         comp = score['compound']
         if neg > pos:
-            tweets.loc[index, 'sentiment'] = 'negative'
+            tweets_senti.loc[index, 'sentiment'] = 'negative'
         elif pos > neg:
-            tweets.loc[index, 'sentiment'] = 'positive'
+            tweets_senti.loc[index, 'sentiment'] = 'positive'
         else:
-            tweets.loc[index, 'sentiment'] = 'neutral'
-        tweets.loc[index, 'neg'] = neg
-        tweets.loc[index, 'neu'] = neu
-        tweets.loc[index, 'pos'] = pos
-        tweets.loc[index, 'compound'] = comp
+            tweets_senti.loc[index, 'sentiment'] = 'neutral'
+        tweets_senti.loc[index, 'neg'] = neg
+        tweets_senti.loc[index, 'neu'] = neu
+        tweets_senti.loc[index, 'pos'] = pos
+        tweets_senti.loc[index, 'compound'] = comp
         
-    return tweets
+    return tweets_senti
 
 def text_cleaning(text):
     """
@@ -233,6 +234,7 @@ def text_cleaning(text):
     stopword = nltk.corpus.stopwords.words('english')
     stopword.append('')
     stopword.append('cont')
+    ps = SnowballStemmer('english')
     text_lc = "".join([word.lower() for word in text if word not in string.punctuation]) # remove puntuation
     text_rc = re.sub('[0-9]+', '', text_lc)
     tokens = re.split('\W+', text_rc)    # tokenization
