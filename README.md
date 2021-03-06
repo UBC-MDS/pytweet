@@ -16,7 +16,7 @@
 - `plot_hashtags`:             
     - This function creates an analysis of the hashtags in tweets, and plots the most frequently used hashtag words.
 
-- `sentiment_analysis`:              
+- `tweet_sentiment_analysis`:              
     - This function applies sentiment analysis to tweets. It associates tokens in tweets with positive or negative sentiments and calculates their corresponding frequencies.           
 
 - `visualize_sentiment`:            
