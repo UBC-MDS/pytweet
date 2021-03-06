@@ -40,36 +40,13 @@ $ pip install -i https://test.pypi.org/simple/ pytweet
 
 ## Example Usage Scenario
 ```
-from pytweet.pytweet import plot_timeline
-import pandas as pd
-
-def helper_create_data():
-    """
-    Helper function for creating dataframe for testing
-    Parameters
-    -----------
-    Returns
-    --------
-    pandas.DataFrame
-        Returns a dataframe to be used for testing
-    Examples
-    ---------
-    >>> helper_create_data()
-    """
-    tweet_data = pd.read_csv("./tests/trumptweets-test.csv")
-    return tweet_data
-
-data = helper_create_data()
-plot_timeline(data, 'time')
+tweet_data = pytweet.get_tweets('@BrunoMars', n_tweets=500)
+pytweet.plot_timeline(tweet_data, 'time')
 ```
 ![](./img/timeline_plot.png)
 
 ```
-from pytweet.pytweet import plot_hashtags
-import pandas as pd
-import re
-
-plot_hashtags(data, 'tweet')
+pytweet.plot_hashtags(tweet_data, 'tweet')
 ```
 ![](./img/hashtag_plot.png)
 ## Documentation
