@@ -50,23 +50,23 @@ def test_get_tweets_error():
     """
     # test invalid handle
     with raises(TypeError) as e:
-        get_tweets(object('elon'))
-        assert str(e.value) == 'Invalid argument type: handle must be a string.'
+        get_tweets(123)
+    assert str(e.value) == 'Invalid argument type: handle must be a string.'
 
     # test invalid n_tweets
     with raises(TypeError) as e:
         get_tweets('elonmusk', n_tweets='football')
-        assert str(e.value) == 'Invalid argument: input n_tweets must be >= 0.'
+    assert str(e.value) == 'Invalid argument: input n_tweets must be >= 0.'
 
     # test invalid include_replies
     with raises(TypeError) as e:
         get_tweets('elonmusk', include_replies=3)
-        assert str(e.value) == 'Invalid argument type: include_replies must be boolean.'
+    assert str(e.value) == 'Invalid argument type: include_replies must be boolean.'
 
     # test invalid verbose
     with raises(TypeError) as e:
         get_tweets('elonmusk', verbose='nah')
-        assert str(e.value) == 'Invalid argument type: verbose must be boolean.'
+    assert str(e.value) == 'Invalid argument type: verbose must be boolean.'
 
     # test non-existent user
     with raises(TweepError):
@@ -104,12 +104,12 @@ def test_plot_timeline():
     # arguments are wrong
     with raises(Exception) as e:
         plot_timeline('', 'time')
-        assert str(e.value) == "The value of the argument 'df' " \
+    assert str(e.value) == "The value of the argument 'df' " \
                            "must be type of dataframe."
     
     with raises(Exception) as e:
         plot_timeline(data, 123)
-        assert str(e.value) == "The value of the argument 'time_col' must be " \
+    assert str(e.value) == "The value of the argument 'time_col' must be " \
                            "type of string"
 
     # Test the plot attributes 
@@ -133,12 +133,12 @@ def test_plot_hashtags():
     # arguments are wrong
     with raises(Exception) as e:
         plot_hashtags('', 'tweet')
-        assert str(e.value) == "The value of the argument 'df' " \
+    assert str(e.value) == "The value of the argument 'df' " \
                            "must be type of dataframe."
     
     with raises(Exception) as e:
         plot_hashtags(data, 123)
-        assert str(e.value) == "The value of the argument 'text_col' must be " \
+    assert str(e.value) == "The value of the argument 'text_col' must be " \
                            "type of string"
 
     # Test the plot attributes 
@@ -146,7 +146,6 @@ def test_plot_hashtags():
     assert plot.encoding.x.shorthand == 'Count', 'x_axis should be mapped to the x axis'
     assert plot.encoding.y.shorthand == 'Keyword', 'y_axis should be mapped to the y axis'  
     assert plot.mark == 'bar', 'mark should be a bar'
-
 
 
 
@@ -164,17 +163,18 @@ def test_visualize_sentiments():
     # Run sentiment analysis
     sentiment = tweet_sentiment_analysis(data)
     
+    #Error Checks
     with raises(TypeError) as e:
         visualize_sentiment(sentiment, "single")
-        assert str(e.value) == "Invalid argument for plot_type: You must enter one of 'Standard', 'Stacked', 'Separate"
-    
+    assert str(e.value) == "Invalid argument for plot_type: You must enter one of 'Standard', 'Stacked', 'Separate'"
+
     with raises(Exception) as e:
         visualize_sentiment("data")
-        assert str(e.value) == "The input of sentiment_df should be a Pandas DataFrame, did you use ouput of tweet_sentiment_analysis?"
-        
+    assert str(e.value) == "The input of sentiment_df should be a Pandas DataFrame, did you use output of tweet_sentiment_analysis?"
+
     with raises(KeyError) as e:
         visualize_sentiment(data2)
-        assert str(e.value) == "Input does not contain column for sentiment, did you use ouput of tweet_sentiment_analysis?"
+    assert str(e.value) == "'Input does not contain column for sentiment, did you use output of tweet_sentiment_analysis?'"
         
     #standard bar chart checks
     standard_plot = visualize_sentiment(sentiment)
