@@ -86,7 +86,7 @@ def helper_create_data():
     ---------
     >>> helper_create_data()
     """
-    tweet_data = pd.read_csv("./tests/trumptweets-test.csv")
+    tweet_data = pd.read_csv("./tests/brunomars_data.csv")
     return tweet_data
 
 def test_plot_timeline():
