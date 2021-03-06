@@ -8,6 +8,14 @@ import altair as alt
 import re
 from datetime import datetime
 from tweepy import TweepError
+from textblob import TextBlob
+import numpy as np
+import nltk
+import string
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from nltk.stem import SnowballStemmer
+from sklearn.feature_extraction.text import CountVectorizer
+nltk.download('stopwords')
 
 def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
     """
@@ -172,10 +180,10 @@ def plot_hashtags(df, text_col):
     )
     return hashtag_plot
 
-def sentiment_analysis(tweets):
+def tweet_sentiment_analysis(tweets):
     """
-    This function first trains a Logistic Regression model based on the Natural Languange Processing (NLP) Kit
-    and use this model to do a sentiment study on the given tweets (input).
+    This function examine and categorize each tweet in the dataframe into either 'positive' or 'negative' or netrual' sentiments. 
+    The sentiment information together with the related scores are added to the original dataframe.
 
     Parameters:
     -----------
@@ -184,12 +192,54 @@ def sentiment_analysis(tweets):
 
     Returns:
     --------
-    tweets_df : dataframe
-        A dataframe contains words that are used, sentiment class, and frequency.
+    tweets_senti : dataframe
+        A new dataframe that has added 'sentiment' category and related score informations onto the input dataframe. 
     """
+    tweets_senti = tweets
+    tweets_senti[['polarity', 'subjectivity']] = tweets_senti['tweet'].apply(lambda Text: pd.Series(TextBlob(Text).sentiment))
+    for index, row in tweets_senti['tweet'].iteritems():
+        score = SentimentIntensityAnalyzer().polarity_scores(row)
+        neg = score['neg']
+        neu = score['neu']
+        pos = score['pos']
+        comp = score['compound']
+        if neg > pos:
+            tweets_senti.loc[index, 'sentiment'] = 'negative'
+        elif pos > neg:
+            tweets_senti.loc[index, 'sentiment'] = 'positive'
+        else:
+            tweets_senti.loc[index, 'sentiment'] = 'neutral'
+        tweets_senti.loc[index, 'neg'] = neg
+        tweets_senti.loc[index, 'neu'] = neu
+        tweets_senti.loc[index, 'pos'] = pos
+        tweets_senti.loc[index, 'compound'] = comp
+        
+    return tweets_senti
 
-    # TODO
-    return None
+def text_cleaning(text):
+    """
+    This helper function cleans the tweet text. The cleaning process includes:  remove puntuation, tokenization, 
+    remove stopwords and stemming. This helper function will be called in the tweet_rank function to facilitate tween ranking analysis.
+
+    Parameters:
+    -----------
+    text : np.array
+        A np.array that contains a list of strings (tweets). 
+
+    Returns:
+    --------
+    text : np.array
+        A np.array that contains a list of strings (cleaned tweets) 
+    """
+    stopword = nltk.corpus.stopwords.words('english')
+    stopword.append('')
+    stopword.append('cont')
+    ps = SnowballStemmer('english')
+    text_lc = "".join([word.lower() for word in text if word not in string.punctuation]) # remove puntuation
+    text_rc = re.sub('[0-9]+', '', text_lc)
+    tokens = re.split('\W+', text_rc)    # tokenization
+    text = [ps.stem(word) for word in tokens if word not in stopword]  # remove stopwords and stemming
+    return text 
 
 def visualize_sentiment(sentiment_df):
     """
