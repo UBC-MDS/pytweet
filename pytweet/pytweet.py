@@ -277,9 +277,9 @@ def visualize_sentiment(sentiment_df, plot_type = "Standard"):
     if plot_type not in options:
         raise TypeError("Invalid argument for plot_type: You must enter one of 'Standard', 'Stacked', 'Separate'")
     elif not isinstance(sentiment_df, pd.DataFrame):
-        raise Exception("The input of sentiment_df should be a Pandas DataFrame, did you use ouput of tweet_sentiment_analysis?")
+        raise Exception("The input of sentiment_df should be a Pandas DataFrame, did you use output of tweet_sentiment_analysis?")
     elif 'sentiment' not in sentiment_df:
-        raise KeyError("Input does not contain column for sentiment, did you use ouput of tweet_sentiment_analysis?")
+        raise KeyError("Input does not contain column for sentiment, did you use output of tweet_sentiment_analysis?")
 
     #Define tweet_rank function
     def tweet_rank (df, sentiment):
