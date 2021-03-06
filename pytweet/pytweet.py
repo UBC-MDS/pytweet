@@ -182,7 +182,7 @@ def plot_hashtags(df, text_col):
 
 def tweet_sentiment_analysis(tweets):
     """
-    This function examine and categorize each tweet in the dataframe into either 'positive' or 'negative' or netrual' sentiments. 
+    This function examine and categorize each tweet in the dataframe into either 'positive' or 'negative' or neutral' sentiments. 
     The sentiment information together with the related scores are added to the original dataframe.
 
     Parameters:
@@ -241,7 +241,7 @@ def text_cleaning(text):
     text = [ps.stem(word) for word in tokens if word not in stopword]  # remove stopwords and stemming
     return text 
 
-def visualize_sentiment(sentiment_df):
+def visualize_sentiment(sentiment_df, plot_type = "Standard"):
     """
     Takes in the output of sentiment_analysis and creates
     a visualization of user's tweets with sentimental analysis.
@@ -249,8 +249,14 @@ def visualize_sentiment(sentiment_df):
     Parameters:
     -----------
     sentiment_df : dataframe
-        Output of sentimenet_analysis,
-        dataframe that contains columns for words, sentiment class, and frequency
+        Output of tweet_sentiment_analysis,
+        dataframe that contains added columns from tweet_sentiment_analysis
+    
+    plot_type : string
+        Optional: Type of plot to return, 3 options:'Standard', 'Stacked', and 'Separate'
+        'Standard' Returns bar plot of most common words tweeted color coded by sentiment
+        'Stacked' Returns same as 'Standard' but if words are found in other sentiments they are stacked together
+        'Separate' Returns 3 bar plots with the sentiment of 'Postive' 'Neutral', and 'Negative' separated
 
     Returns:
     --------
@@ -258,9 +264,77 @@ def visualize_sentiment(sentiment_df):
         A bar plot of the user's tweets containing in order
         the most common words, colour coded by the word's sentiment class.
     """
+    
+    #check inputs
+    options = ("Standard", "Stacked", "Separate")
+    if plot_type not in options:
+        raise TypeError("Invalid argument for plot_type: You must enter one of 'Standard', 'Stacked', 'Separate'")
+    elif not isinstance(sentiment_df, pd.DataFrame):
+        raise Exception("The input of sentiment_df should be a Pandas DataFrame, did you use ouput of tweet_sentiment_analysis?")
+    elif 'sentiment' not in sentiment_df:
+        raise KeyError("Input does not contain column for sentiment, did you use ouput of tweet_sentiment_analysis?")
 
-    # TODO
-    return None
+    #Define tweet_rank function
+    def tweet_rank (df, sentiment):
+        """function to return most common words tweeted for a specified sentiment"""
+        df_senti = df[df['sentiment']==sentiment]
+        countVectorizer = CountVectorizer(analyzer=text_cleaning, stop_words = 'english') 
+        countVector = countVectorizer.fit_transform(df_senti['tweet'])
+        count_vect_df = pd.DataFrame(countVector.toarray(), columns=countVectorizer.get_feature_names())
+        count_vect_df.head()
+        count = pd.DataFrame(count_vect_df.sum())
+        countdf = count.sort_values(0,ascending=False).head(20)
+        return countdf[1:11]
+    
+    
+    dataframes = dict()            #create empty dictionary to store sentiment dataframes
+    for sentiment in np.unique(sentiment_df["sentiment"]):
+        sent_df = tweet_rank(sentiment_df, sentiment)
+        sent_df.columns = ['frequency']                #rename columns and include column for sentiment and word
+        sent_df["sentiment"] = sentiment
+        sent_df['Word'] = sent_df.index
+        dataframes[sentiment] = sent_df     #append sentiment dataframe to dictionary
+
+    top_words_df = pd.concat([dataframes['positive'], dataframes['neutral'], dataframes['negative']]) #add all dataframes together, may need adjustment later
+
+    #Plot if standard is selected
+    if plot_type == "Standard":
+        top_words_df['Word'] = top_words_df['Word'] + ' ('+ top_words_df["sentiment"] +')'
+        standard_plot = alt.Chart(top_words_df, title='Most Common Words used by Twitter User').mark_bar().encode(
+                            x=alt.X('frequency', title= 'Number of Occurences'),
+                            y=alt.Y('Word', sort = '-x'),
+                            color=alt.Color("sentiment", scale=alt.Scale(domain = ['positive', 'neutral', 'negative'], range=['blue', 'orange', 'red'])))
+        return standard_plot
+    
+   #Plot if stacked is selected
+    elif plot_type == "Stacked":
+        top_words_df['Word'] = top_words_df.index
+        stacked_plot =  alt.Chart(top_words_df, title='Most Common Words used by Twitter User').mark_bar().encode(
+                            x=alt.X('frequency', title= 'Number of Occurences'),
+                            y=alt.Y('Word', sort = '-x'),
+                            color=alt.Color("sentiment", scale=alt.Scale(domain = ['positive', 'neutral', 'negative'], range=['blue', 'orange', 'red'])))
+        return stacked_plot
+    
+    #Plot if Separate is selected
+    elif plot_type == "Separate":
+        negative = alt.Chart(dataframes['negative'], title='Most Common Negative Words used by Twitter User').mark_bar().encode(
+            x=alt.X('frequency', title= 'Number of Occurences'),
+            y=alt.Y('Word', sort = '-x'),
+            color=alt.value("red"))
+
+        positive = alt.Chart(dataframes['positive'], title='Most Common Postive Words used by Twitter User').mark_bar().encode(
+            x=alt.X('frequency', title= 'Number of Occurences'),
+            y=alt.Y('Word', sort = '-x'),
+            color=alt.value("blue"))
+
+        neutral = alt.Chart(dataframes['neutral'], title='Most Common Neutral Words used by Twitter User').mark_bar().encode(
+            x=alt.X('frequency', title= 'Number of Occurences'),
+            y=alt.Y('Word', sort = '-x'),
+            color=alt.value("orange"))
+        
+        separate_plot = positive | neutral | negative
+        return separate_plot
+
 
 ## for generate toydata
 #output = get_tweets('@pytweetGod')
