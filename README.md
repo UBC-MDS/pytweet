@@ -9,6 +9,8 @@
 
 - `get_tweets`:              
     - This function extracts tweets from a Twitter user given their handle (i.e. @elonmusk). 
+    - NOTE: this function requires Twitter API credentials stored as environment variables.
+
 
 - `plot_timeline`:             
     - This function creates an analysis of what time of day the tweets occurs and plots the counts of tweets and hours. 
