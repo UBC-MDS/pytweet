@@ -155,7 +155,7 @@ def test_tweet_sentiment_analysis():
     assert type(result) == pd.core.frame.DataFrame 
   
     # make sure the output has the correct columns 
-    assert sum(result.columns == ['time', 'tweet', 'polarity', 'sentiment', 'neg', 'neu', 'pos', 'compound') 
+    assert sum(result.columns == ['time', 'tweet', 'polarity', 'sentiment', 'neg', 'neu', 'pos', 'compound']) 
     
     # make sure the output is not empty. 
     assert len(result) > 0
