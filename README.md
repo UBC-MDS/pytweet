@@ -53,8 +53,14 @@ pytweet.get_tweets('@BrunoMars', n_tweets=8)
 > 7  2021-03-02 16:03:35  Alright i’ll be back. I gotta go approve some ...
 ```
 ```Python
-tweet_data = pytweet.get_tweets('@BrunoMars', n_tweets=500)
+tweet_data = pytweet.get_tweets('@BrunoMars', n_tweets=50)
+tweet_sentiment_analysis(tweet_data1)
+```
+![](./img/sentiment_analysis_example.png)
 
+
+```Python
+tweet_data = pytweet.get_tweets('@BrunoMars', n_tweets=500)
 pytweet.plot_timeline(tweet_data, 'time')
 ```
 ![](./img/timeline_plot.png)
