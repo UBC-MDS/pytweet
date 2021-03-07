@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.8.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"name": "data-12e94c925dc81baa1529c16cb9bf0b89"}, "mark": "bar", "encoding": {"x": {"type": "quantitative", "field": "Count", "title": "Hashtags"}, "y": {"type": "nominal", "field": "Keyword", "sort": "-x", "title": "Count of Hashtags"}}, "title": "Top 15 Hashtag Words", "transform": [{"window": [{"op": "rank", "field": "Count", "as": "rank"}], "sort": [{"field": "Count", "order": "descending"}]}, {"filter": "(datum.rank <= 15)"}], "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json", "datasets": {"data-12e94c925dc81baa1529c16cb9bf0b89": [{"Keyword": "#SilkSonic", "Count": 5}, {"Keyword": "#LeaveTheDoorOpen", "Count": 2}, {"Keyword": "#Frikikikikiki", "Count": 1}, {"Keyword": "#ThatWasDeep", "Count": 1}, {"Keyword": "#ImPrettyDeep", "Count": 1}, {"Keyword": "#K", "Count": 1}, {"Keyword": "#BigBriefcaseBusinessBoy", "Count": 1}, {"Keyword": "#TropicalLuxury", "Count": 1}, {"Keyword": "#NationalCoquitoDay", "Count": 1}, {"Keyword": "#SelvaReyRum", "Count": 1}, {"Keyword": "#TropicalLuxu", "Count": 1}, {"Keyword": "#ThinkAboutIt", "Count": 1}, {"Keyword": "#SayHerName", "Count": 2}, {"Keyword": "#JusticeForBreonnaTaylor", "Count": 2}, {"Keyword": "#LOCKDOWN", "Count": 1}, {"Keyword": "#BlackLivesMattters", "Count": 1}, {"Keyword": "#JusticeForGeorgeFloyd", "Count": 1}, {"Keyword": "#BlackLivesMatter", "Count": 2}, {"Keyword": "#JusticeForGeorge", "Count": 3}, {"Keyword": "#1", "Count": 4}, {"Keyword": "#ForeverValentine", "Count": 4}, {"Keyword": "#ClubQuarantine", "Count": 1}, {"Keyword": "#MarsMeetsTheMouse", "Count": 1}, {"Keyword": "#ChuckBerry", "Count": 1}, {"Keyword": "#MondayMotivaton", "Count": 1}, {"Keyword": "#protectmaunakea", "Count": 1}, {"Keyword": "#MegaMashUp", "Count": 1}, {"Keyword": "#Hooligans", "Count": 6}, {"Keyword": "#NewProfilePic", "Count": 1}, {"Keyword": "#Contender", "Count": 1}, {"Keyword": "#ChampionMindset", "Count": 1}, {"Keyword": "#CallMeUFC", "Count": 1}, {"Keyword": "#ShotForShot", "Count": 1}, {"Keyword": "#PleaseMe", "Count": 5}, {"Keyword": "#GodsPlan", "Count": 1}, {"Keyword": "#StreamPleaseMe", "Count": 1}, {"Keyword": "#ThatsHard", "Count": 3}, {"Keyword": "#PleaseMeVideo", "Count": 3}, {"Keyword": "#WakeUpInTheSky", "Count": 2}, {"Keyword": "#JazmineBarnes", "Count": 1}, {"Keyword": "#AudeMARS", "Count": 1}, {"Keyword": "#wakeupinthesky", "Count": 2}, {"Keyword": "#Oxnard", "Count": 1}, {"Keyword": "#LocalBoyz", "Count": 1}, {"Keyword": "#AlohaStadium", "Count": 1}, {"Keyword": "#Hawaii", "Count": 1}, {"Keyword": "#24kmagicworldtour", "Count": 8}, {"Keyword": "#Backstage", "Count": 1}, {"Keyword": "#LastNight", "Count": 1}, {"Keyword": "#LA", "Count": 1}, {"Keyword": "#BLESSED", "Count": 1}, {"Keyword": "#ExtraForever", "Count": 1}, {"Keyword": "#newyork", "Count": 1}, {"Keyword": "#24KMagicWorldTourFinale", "Count": 1}, {"Keyword": "#ChiTown", "Count": 1}, {"Keyword": "#NiaWilson", "Count": 1}, {"Keyword": "#Emmys", "Count": 1}, {"Keyword": "#CruelWorld", "Count": 1}, {"Keyword": "#CHEEEHOOOO", "Count": 1}, {"Keyword": "#showyourAloha", "Count": 1}, {"Keyword": "#Fuck", "Count": 1}, {"Keyword": "#24KMagicWorldTour", "Count": 1}, {"Keyword": "#AskTheDragon", "Count": 2}, {"Keyword": "#RIP", "Count": 1}, {"Keyword": "#StillDreamin", "Count": 1}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

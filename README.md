@@ -14,9 +14,9 @@
     - This function creates an analysis of what time of day the tweets occurs and plots the counts of tweets and hours. 
 
 - `plot_hashtags`:             
-    - This function creates an analysis of the hashtags in tweets, and plots the hashtag analysis.
+    - This function creates an analysis of the hashtags in tweets, and plots the most frequently used hashtag words.
 
-- `sentiment_analysis`:              
+- `tweet_sentiment_analysis`:              
     - This function applies sentiment analysis to tweets. It associates tokens in tweets with positive or negative sentiments and calculates their corresponding frequencies.           
 
 - `visualize_sentiment`:            
@@ -51,10 +51,10 @@ pytweet.get_tweets('@BrunoMars', n_tweets=8)
 > 5  2021-03-03 20:48:20        Just posted a photo https://t.co/wPsxKeCAWH
 > 6  2021-03-02 19:32:41  Lacoste: “Bruno, if you want the clothes to se...
 > 7  2021-03-02 16:03:35  Alright i’ll be back. I gotta go approve some ...
-> 8  2021-03-02 15:51:34                    RESPECT https://t.co/eiPf6FRhOF
 ```
 ```Python
-tweet_data = pytweet.get_tweets('@BrunoMars')
+tweet_data = pytweet.get_tweets('@BrunoMars', n_tweets=500)
+
 pytweet.plot_timeline(tweet_data, 'time')
 ```
 ![](./img/timeline_plot.png)
@@ -63,6 +63,12 @@ pytweet.plot_timeline(tweet_data, 'time')
 pytweet.plot_hashtags(tweet_data, 'tweet')
 ```
 ![](./img/hashtag_plot.png)
+
+```Python
+Sentiment_df = pytweet.tweet_sentiment_analysis(tweet_data)
+visualize_sentiment(Sentiment_df)
+```
+![](./img/visualize_sentiment_plot.png)
 ## Documentation
 
 The official documentation is hosted on Read the Docs: https://pytweet.readthedocs.io/en/latest/
