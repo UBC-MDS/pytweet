@@ -32,7 +32,15 @@ $ pip install -i https://test.pypi.org/simple/ pytweet
 
 ## Dependencies
 
-- TODO
+- python = "^3.8"
+- pandas = "^1.2.3"
+- altair = "^4.1.0"
+- DateTime = "^4.3"
+- tweepy = "^3.10.0"
+- textblob = "^0.15.3"
+- sklearn = "^0.0"
+- nltk = "3.5"
+- strings = "0.1.2"
 
 ## Usage
 ```Python
@@ -52,23 +60,30 @@ pytweet.get_tweets('@BrunoMars', n_tweets=8)
 > 6  2021-03-02 19:32:41  Lacoste: “Bruno, if you want the clothes to se...
 > 7  2021-03-02 16:03:35  Alright i’ll be back. I gotta go approve some ...
 ```
+
 ```Python
 tweet_data = pytweet.get_tweets('@BrunoMars', n_tweets=500)
 
 pytweet.plot_timeline(tweet_data, 'time')
 ```
-![](./img/timeline_plot.png)
+<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/timeline_plot.png" width="500">
 
 ```Python
 pytweet.plot_hashtags(tweet_data, 'tweet')
 ```
-![](./img/hashtag_plot.png)
+<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/hashtag_plot.png" width="500">
+
+```Python
+tweet_sentiment_analysis(tweet_data)
+```
+<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/sentiment_analysis_example.png" width="800">
 
 ```Python
 Sentiment_df = pytweet.tweet_sentiment_analysis(tweet_data)
 visualize_sentiment(Sentiment_df)
 ```
-![](./img/visualize_sentiment_plot.png)
+<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/visualize_sentiment_plot.png" width="700">
+
 ## Documentation
 
 The official documentation is hosted on Read the Docs: https://pytweet.readthedocs.io/en/latest/
