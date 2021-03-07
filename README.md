@@ -62,6 +62,12 @@ pytweet.plot_timeline(tweet_data, 'time')
 pytweet.plot_hashtags(tweet_data, 'tweet')
 ```
 ![](./img/hashtag_plot.png)
+
+```Python
+Sentiment_df = pytweet.tweet_sentiment_analysis(tweet_data)
+visualize_sentiment(Sentiment_df)
+```
+![](./img/visualize_sentiment_plot.png)
 ## Documentation
 
 The official documentation is hosted on Read the Docs: https://pytweet.readthedocs.io/en/latest/
