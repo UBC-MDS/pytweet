@@ -9,6 +9,8 @@
 
 - `get_tweets`:              
     - This function extracts tweets from a Twitter user given their handle (i.e. @elonmusk). 
+    - NOTE: this function requires Twitter API credentials stored as environment variables.
+
 
 - `plot_timeline`:             
     - This function creates an analysis of what time of day the tweets occurs and plots the counts of tweets and hours. 
@@ -75,13 +77,13 @@ pytweet.plot_hashtags(tweet_data, 'tweet')
 ```Python
 tweet_sentiment_analysis(tweet_data)
 ```
-<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/sentiment_analysis_example.png" width="500">
+<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/sentiment_analysis_example.png" width="800">
 
 ```Python
 Sentiment_df = pytweet.tweet_sentiment_analysis(tweet_data)
 visualize_sentiment(Sentiment_df)
 ```
-<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/visualize_sentiment_plot.png" width="500">
+<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/visualize_sentiment_plot.png" width="700">
 
 ## Documentation
 
