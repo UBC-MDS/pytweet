@@ -202,7 +202,11 @@ def tweet_sentiment_analysis(tweets):
     tweets_senti : dataframe
         A new dataframe that has added 'sentiment' category and related score informations onto the input dataframe. 
     """
-    tweets_senti = tweets
+
+    if not isinstance(tweets, pd.DataFrame):
+        raise TypeError("Invalid argument type: input must be a dataframe.")
+
+    tweets_senti = tweets.copy()
     tweets_senti[['polarity', 'subjectivity']] = tweets_senti['tweet'].apply(lambda Text: pd.Series(TextBlob(Text).sentiment))
     for index, row in tweets_senti['tweet'].iteritems():
         score = SentimentIntensityAnalyzer().polarity_scores(row)

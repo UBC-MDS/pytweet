@@ -53,15 +53,15 @@ pytweet.get_tweets('@BrunoMars', n_tweets=8)
 > 7  2021-03-02 16:03:35  Alright i’ll be back. I gotta go approve some ...
 ```
 ```Python
-tweet_data1 = pytweet.get_tweets('@BrunoMars', n_tweets=50)
+tweet_data = pytweet.get_tweets('@BrunoMars', n_tweets=50)
 tweet_sentiment_analysis(tweet_data1)
 ```
 ![](./img/sentiment_analysis_example.png)
 
 
 ```Python
-tweet_data2 = pytweet.get_tweets('@BrunoMars', n_tweets=500)
-pytweet.plot_timeline(tweet_data2, 'time')
+tweet_data = pytweet.get_tweets('@BrunoMars', n_tweets=500)
+pytweet.plot_timeline(tweet_data, 'time')
 ```
 ![](./img/timeline_plot.png)
 
@@ -69,6 +69,12 @@ pytweet.plot_timeline(tweet_data2, 'time')
 pytweet.plot_hashtags(tweet_data, 'tweet')
 ```
 ![](./img/hashtag_plot.png)
+
+```Python
+Sentiment_df = pytweet.tweet_sentiment_analysis(tweet_data)
+visualize_sentiment(Sentiment_df)
+```
+![](./img/visualize_sentiment_plot.png)
 ## Documentation
 
 The official documentation is hosted on Read the Docs: https://pytweet.readthedocs.io/en/latest/

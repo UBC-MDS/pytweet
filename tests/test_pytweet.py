@@ -152,13 +152,14 @@ def test_tweet_sentiment_analysis():
     Test existing functionalities of tweet_sentiment_analysis(), which supposed to be a dataframe with semetiment results
     """
     data = helper_create_data()
-    result = tweet_sentiment_analysis('data')
+    data = data[["time", "tweet"]]
+    result = tweet_sentiment_analysis(data)
 
     # make sure the input is a dataframe
     assert type(result) == pd.core.frame.DataFrame 
   
     # make sure the output has the correct columns 
-    assert sum(result.columns == ['time', 'tweet', 'polarity', 'sentiment', 'neg', 'neu', 'pos', 'compound']) 
+    assert sum(result.columns == ['time', 'tweet', 'polarity', 'subjectivity', 'sentiment', 'neg', 'neu', 'pos', 'compound']) 
     
     # make sure the output is not empty. 
     assert len(result) > 0
