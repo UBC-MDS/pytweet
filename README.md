@@ -54,6 +54,7 @@ pytweet.get_tweets('@BrunoMars', n_tweets=8)
 ```
 ```Python
 tweet_data = pytweet.get_tweets('@BrunoMars', n_tweets=500)
+
 pytweet.plot_timeline(tweet_data, 'time')
 ```
 ![](./img/timeline_plot.png)
