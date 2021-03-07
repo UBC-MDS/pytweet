@@ -151,6 +151,9 @@ def test_tweet_sentiment_analysis():
     """
     Test existing functionalities of tweet_sentiment_analysis(), which supposed to be a dataframe with semetiment results
     """
+    data = helper_create_data()
+    result = tweet_sentiment_analysis('data')
+
     # make sure the input is a dataframe
     assert type(result) == pd.core.frame.DataFrame 
   
