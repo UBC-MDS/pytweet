@@ -20,7 +20,7 @@ def test_get_tweets():
 
     6 tests in total.
     """
-    result = get_tweets('@ShawnMendes')
+    result = get_tweets('@pytweetGod')
 
     # test output type
     assert type(result) == pd.core.frame.DataFrame
@@ -33,12 +33,12 @@ def test_get_tweets():
 
     # test n_tweets argument
     n = 35
-    result = get_tweets('@ShawnMendes', n_tweets=n)
+    result = get_tweets('@pytweetGod', n_tweets=n)
     assert result.shape[0] == n
 
     # test include_replies argument, defult = False
-    result = get_tweets('@ShawnMendes')
-    result_rp = get_tweets('@ShawnMendes', include_replies=True)
+    result = get_tweets('@pytweetGod')
+    result_rp = get_tweets('@pytweetGod', include_replies=True)
     assert len(result_rp) > len(result)
 
 
@@ -189,7 +189,7 @@ def test_visualize_sentiments():
     # Run sentiment analysis
     sentiment = tweet_sentiment_analysis(data)
     
-    #Error Checks
+    # Error Checks
     with raises(TypeError) as e:
         visualize_sentiment(sentiment, "single")
     assert str(e.value) == "Invalid argument for plot_type: You must enter one of 'Standard', 'Stacked', 'Separate'"
@@ -210,5 +210,5 @@ def test_visualize_sentiments():
     assert standard_plot.mark == 'bar'
     
     #concatonated bar chart check
-    separate_plot = visualize_sentiment(sentiment,"Separate")
+    separate_plot = visualize_sentiment(sentiment, "Separate")
     assert str(type(separate_plot)) == "<class 'altair.vegalite.v4.api.HConcatChart'>"
