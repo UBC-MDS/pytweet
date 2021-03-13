@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytweet"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python package for text analysis and sentiment analysis on tweets"
 authors = ["mmyz <yzmarco.ma@gmail.com>"]
 license = "MIT"
