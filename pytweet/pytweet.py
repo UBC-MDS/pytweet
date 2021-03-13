@@ -356,16 +356,3 @@ def visualize_sentiment(sentiment_df, plot_type="Standard"):
 
         separate_plot = positive | neutral | negative
         return separate_plot
-
-
-# # for generate toydata
-# output = get_tweets('@BrunoMars', n_tweets=500)
-# output.to_csv("../tests/brunomars_data.csv")
-
-# # for generate plots
-# import altair_saver
-# tweet_data = pd.read_csv("../tests/brunomars_data.csv")
-# timeline = plot_timeline(tweet_data, 'time')
-# timeline.save('../img/timeline_plot.html')
-# hashtags = plot_hashtags(tweet_data, 'tweet')
-# hashtags.save('../img/hashtag_plot.html')
