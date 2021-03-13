@@ -4,7 +4,7 @@
 import pandas as pd
 from pytweet import __version__
 from tweepy import TweepError
-from pytweet.pytweet import *
+from pytweet.pytweet import get_tweets, plot_timeline, plot_hashtags, tweet_sentiment_analysis, visualize_sentiment
 from pytest import raises
 # import pytest
 import re
@@ -72,7 +72,7 @@ def test_get_tweets_error():
     with raises(TweepError):
         result = get_tweets('A%@F)UFJSL', n_tweets=20)
 
-        
+
 def helper_create_data():
     """
     Helper function for creating dataframe for testing
@@ -99,25 +99,25 @@ def test_plot_timeline():
     """
     # Calling helper function to create data
     data = helper_create_data()
-    
-    # Test the Exception is correctly raised when the type of 
+
+    # Test the Exception is correctly raised when the type of
     # arguments are wrong
     with raises(Exception) as e:
         plot_timeline('', 'time')
     assert str(e.value) == "The value of the argument 'df' " \
                            "must be type of dataframe."
-    
+
     with raises(Exception) as e:
         plot_timeline(data, 123)
     assert str(e.value) == "The value of the argument 'time_col' must be " \
                            "type of string"
 
-    # Test the plot attributes 
+    # Test the plot attributes
     plot = plot_timeline(data, 'time')
     assert plot.encoding.x.shorthand == 'hour', 'x_axis should be mapped to the x axis'
-    assert plot.encoding.y.shorthand == 'count()', 'y_axis should be mapped to the y axis'  
+    assert plot.encoding.y.shorthand == 'count()', 'y_axis should be mapped to the y axis'
     assert plot.mark == 'line', 'mark should be a line'
-    
+
 def test_plot_hashtags():
     """
     Tests the hashtags function to make sure the outputs are correct.
@@ -129,39 +129,41 @@ def test_plot_hashtags():
     # Calling helper function to create data
     data = helper_create_data()
 
-    # Test the Exception is correctly raised when the type of 
+    # Test the Exception is correctly raised when the type of
     # arguments are wrong
     with raises(Exception) as e:
         plot_hashtags('', 'tweet')
     assert str(e.value) == "The value of the argument 'df' " \
                            "must be type of dataframe."
-    
+
     with raises(Exception) as e:
         plot_hashtags(data, 123)
     assert str(e.value) == "The value of the argument 'text_col' must be " \
                            "type of string"
 
-    # Test the plot attributes 
+    # Test the plot attributes
     plot = plot_hashtags(data, 'tweet')
     assert plot.encoding.x.shorthand == 'Count', 'x_axis should be mapped to the x axis'
-    assert plot.encoding.y.shorthand == 'Keyword', 'y_axis should be mapped to the y axis'  
+    assert plot.encoding.y.shorthand == 'Keyword', 'y_axis should be mapped to the y axis'
     assert plot.mark == 'bar', 'mark should be a bar'
 
 def test_tweet_sentiment_analysis():
     """
-    Test existing functionalities of tweet_sentiment_analysis(), which supposed to be a dataframe with semetiment results
+    Test existing functionalities of tweet_sentiment_analysis(),
+    which supposed to be a dataframe with semetiment results
     """
     data = helper_create_data()
     data = data[["time", "tweet"]]
     result = tweet_sentiment_analysis(data)
 
     # make sure the input is a dataframe
-    assert type(result) == pd.core.frame.DataFrame 
-  
-    # make sure the output has the correct columns 
-    assert sum(result.columns == ['time', 'tweet', 'polarity', 'subjectivity', 'sentiment', 'neg', 'neu', 'pos', 'compound']) 
-    
-    # make sure the output is not empty. 
+    assert type(result) == pd.core.frame.DataFrame
+
+    # make sure the output has the correct columns
+    assert sum(result.columns == ['time', 'tweet', 'polarity', 'subjectivity',
+                                  'sentiment', 'neg', 'neu', 'pos', 'compound'])
+
+    # make sure the output is not empty.
     assert len(result) > 0
 
 def test_tweet_sentiment_analysis_error():
@@ -188,7 +190,7 @@ def test_visualize_sentiments():
     data2 = helper_create_data()
     # Run sentiment analysis
     sentiment = tweet_sentiment_analysis(data)
-    
+
     # Error Checks
     with raises(TypeError) as e:
         visualize_sentiment(sentiment, "single")
@@ -196,19 +198,21 @@ def test_visualize_sentiments():
 
     with raises(Exception) as e:
         visualize_sentiment("data")
-    assert str(e.value) == "The input of sentiment_df should be a Pandas DataFrame, did you use output of tweet_sentiment_analysis?"
+    assert str(e.value) == """The input of sentiment_df should be a Pandas DataFrame,
+                           did you use output of tweet_sentiment_analysis?"""
 
     with raises(KeyError) as e:
         visualize_sentiment(data2)
-    assert str(e.value) == "'Input does not contain column for sentiment, did you use output of tweet_sentiment_analysis?'"
-        
-    #standard bar chart checks
+    assert str(e.value) == "'Input does not contain column for sentiment," \
+                           " did you use output of tweet_sentiment_analysis?'"
+
+    # standard bar chart checks
     standard_plot = visualize_sentiment(sentiment)
     assert str(type(standard_plot)) == "<class 'altair.vegalite.v4.api.Chart'>"
-    assert standard_plot.encoding.x.shorthand == 'frequency','x_axis should be mapped to the x_axis'
+    assert standard_plot.encoding.x.shorthand == 'frequency', 'x_axis should be mapped to the x_axis'
     assert standard_plot.encoding.y.shorthand == 'Word', 'y_axis should be mapped to the y_axis'
     assert standard_plot.mark == 'bar'
-    
-    #concatonated bar chart check
+
+    # concatonated bar chart check
     separate_plot = visualize_sentiment(sentiment, "Separate")
     assert str(type(separate_plot)) == "<class 'altair.vegalite.v4.api.HConcatChart'>"

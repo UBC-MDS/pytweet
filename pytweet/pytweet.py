@@ -20,7 +20,7 @@ nltk.download('stopwords')
 def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
     """
     Retreives all tweets of a user given their Twitter handle
-    (i.e. @elonmusk) through Twitter API. User must have API 
+    (i.e. @elonmusk) through Twitter API. User must have API
     keys and secrets stored as os environment variables.
 
     Parts of the function references Brown University CSCI0931's
@@ -73,14 +73,14 @@ def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
     latest = api.user_timeline(screen_name=handle,
                                exclude_replies=not(include_replies),
                                count=200)  # max count per request is 200
-    
+
     tweets.extend(latest)
 
     # request recursively to get all tweets/n_tweets
     oldest = latest[-1].id
     while(len(latest) > 0 and len(tweets) < n_tweets):
-        latest = api.user_timeline(screen_name=handle, 
-                                   exclude_replies=not(include_replies), 
+        latest = api.user_timeline(screen_name=handle,
+                                   exclude_replies=not(include_replies),
                                    count=200, max_id=oldest)
         tweets.extend(latest)
         oldest = latest[-1].id
@@ -100,7 +100,7 @@ def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
 def plot_timeline(df, time_col):
     """
     Analysis what time of day the tweets occurs and plot the
-    counts of tweets versus hours. 
+    counts of tweets versus hours.
 
     Parameters:
     -----------
@@ -117,20 +117,18 @@ def plot_timeline(df, time_col):
 
     # Checking for valid inputs
     if not isinstance(df, pd.DataFrame):
-        raise Exception("The value of the argument 'df' must be "\
-                        "type of dataframe.")
+        raise Exception("The value of the argument 'df' must be type of dataframe.")
     if type(time_col) != str:
-        raise Exception("The value of the argument 'time_col' must be "\
-                        "type of string")
-    
+        raise Exception("The value of the argument 'time_col' must be type of string")
+
     # extract hour from time column
     df['time'] = df[time_col].apply(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S"))
     df['hour'] = df['time'].apply(lambda x: x.hour)
-    
+
     # timeline plot
     timeline_plot = alt.Chart(df).mark_line().encode(
         x=alt.X('hour', title="Hour of day"),
-        y=alt.Y('count()',title="Counts of Tweets")).properties(title='Tweet Timeline Analysis')
+        y=alt.Y('count()', title="Counts of Tweets")).properties(title='Tweet Timeline Analysis')
     return timeline_plot
 
 
@@ -154,15 +152,13 @@ def plot_hashtags(df, text_col):
     """
     # Checking for valid inputs
     if not isinstance(df, pd.DataFrame):
-        raise Exception("The value of the argument 'df' must be " \
-                        "type of dataframe.")
+        raise Exception("The value of the argument 'df' must be type of dataframe.")
     if type(text_col) != str:
-        raise Exception("The value of the argument 'text_col' must be " \
-                        "type of string")
-    
+        raise Exception("The value of the argument 'text_col' must be type of string")
+
     # extract hashtags from text
     df['hashtags'] = df[text_col].apply(lambda x: re.findall(r'[#]\w+', x))
-    
+
     # count hashtags
     hashtag_dict = {}
     for hashtags in df["hashtags"]:
@@ -172,23 +168,26 @@ def plot_hashtags(df, text_col):
     hashtag_df = pd.DataFrame(columns=['Keyword', 'Count'])
     for key, value in hashtag_dict.items():
         key_value = [[key, value]]
-        hashtag_df = hashtag_df.append(pd.DataFrame(key_value, columns=['Keyword', 'Count']),\
+        hashtag_df = hashtag_df.append(pd.DataFrame(key_value, columns=['Keyword', 'Count']),
                                        ignore_index=True)
-    
+
     # hashtag frequency plot
     hashtag_plot = alt.Chart(hashtag_df).mark_bar().encode(
         x=alt.X('Count', title="Hashtags"),
-        y=alt.Y('Keyword', title="Count of Hashtags",
-                sort='-x')
-        ).properties(title='Top 15 Hashtag Words'
-        ).transform_window(rank='rank(Count)',
-                           sort=[alt.SortField('Count', order='descending')]
-        ).transform_filter((alt.datum.rank <= 15))
+        y=alt.Y('Keyword', title="Count of Hashtags", sort='-x')
+    ).properties(
+        title='Top 15 Hashtag Words'
+    ).transform_window(
+        rank='rank(Count)',
+        sort=[alt.SortField('Count', order='descending')]
+    ).transform_filter((alt.datum.rank <= 15))
+
     return hashtag_plot
 
 def tweet_sentiment_analysis(tweets):
     """
-    This function examine and categorize each tweet in the dataframe into either 'positive' or 'negative' or neutral' sentiments. 
+    This function examine and categorize each tweet in the dataframe
+     into either 'positive' or 'negative' or neutral' sentiments.
     The sentiment information together with the related scores are added to the original dataframe.
 
     Parameters:
@@ -199,7 +198,7 @@ def tweet_sentiment_analysis(tweets):
     Returns:
     --------
     tweets_senti : dataframe
-        A new dataframe that has added 'sentiment' category and related score informations onto the input dataframe. 
+        A new dataframe that has added 'sentiment' category and related score informations onto the input dataframe.
     """
 
     if not isinstance(tweets, pd.DataFrame):
@@ -277,13 +276,14 @@ def visualize_sentiment(sentiment_df, plot_type="Standard"):
         A bar plot of the user's tweets containing in order
         the most common words, colour coded by the word's sentiment class.
     """
-    
+
     # check inputs
     options = ("Standard", "Stacked", "Separate")
     if plot_type not in options:
         raise TypeError("Invalid argument for plot_type: You must enter one of 'Standard', 'Stacked', 'Separate'")
     elif not isinstance(sentiment_df, pd.DataFrame):
-        raise Exception("The input of sentiment_df should be a Pandas DataFrame, did you use output of tweet_sentiment_analysis?")
+        raise Exception("""The input of sentiment_df should be a Pandas DataFrame,
+                           did you use output of tweet_sentiment_analysis?""")
     elif 'sentiment' not in sentiment_df:
         raise KeyError("Input does not contain column for sentiment, did you use output of tweet_sentiment_analysis?")
 
@@ -291,14 +291,14 @@ def visualize_sentiment(sentiment_df, plot_type="Standard"):
     def tweet_rank(df, sentiment):
         """function to return most common words tweeted for a specified sentiment"""
         df_senti = df[df['sentiment'] == sentiment]
-        countVectorizer = CountVectorizer(analyzer=text_cleaning, stop_words='english') 
+        countVectorizer = CountVectorizer(analyzer=text_cleaning, stop_words='english')
         countVector = countVectorizer.fit_transform(df_senti['tweet'])
         count_vect_df = pd.DataFrame(countVector.toarray(), columns=countVectorizer.get_feature_names())
         count_vect_df.head()
         count = pd.DataFrame(count_vect_df.sum())
         countdf = count.sort_values(0, ascending=False).head(20)
         return countdf[1:11]
-    
+
     dataframes = dict()            # create empty dictionary to store sentiment dataframes
     for sentiment in np.unique(sentiment_df["sentiment"]):
         sent_df = tweet_rank(sentiment_df, sentiment)
@@ -307,7 +307,8 @@ def visualize_sentiment(sentiment_df, plot_type="Standard"):
         sent_df['Word'] = sent_df.index
         dataframes[sentiment] = sent_df     # append sentiment dataframe to dictionary
 
-    top_words_df = pd.concat([dataframes['positive'], dataframes['neutral'], dataframes['negative']]) # add all dataframes together, may need adjustment later
+    # add all dataframes together, may need adjustment later
+    top_words_df = pd.concat([dataframes['positive'], dataframes['neutral'], dataframes['negative']])
 
     # Plot if standard is selected
     if plot_type == "Standard":
@@ -318,34 +319,37 @@ def visualize_sentiment(sentiment_df, plot_type="Standard"):
             color=alt.Color("sentiment", scale=alt.Scale(domain=['positive', 'neutral', 'negative'],
                             range=['blue', 'orange', 'red'])))
         return standard_plot
-    
+
     # Plot if stacked is selected
     elif plot_type == "Stacked":
         top_words_df['Word'] = top_words_df.index
         stacked_plot = alt.Chart(top_words_df, title='Most Common Words used by Twitter User').mark_bar().encode(
             x=alt.X('frequency', title='Number of Occurences'),
             y=alt.Y('Word', sort='-x'),
-            color=alt.Color("sentiment", scale=alt.Scale(domain=['positive', 'neutral', 'negative'], 
+            color=alt.Color("sentiment", scale=alt.Scale(domain=['positive', 'neutral', 'negative'],
                             range=['blue', 'orange', 'red'])))
         return stacked_plot
-    
+
     # Plot if Separate is selected
     elif plot_type == "Separate":
-        negative = alt.Chart(dataframes['negative'], title='Most Common Negative Words used by Twitter User').mark_bar().encode(
+        negative = alt.Chart(dataframes['negative'],
+                             title='Most Common Negative Words used by Twitter User').mark_bar().encode(
             x=alt.X('frequency', title='Number of Occurences'),
             y=alt.Y('Word', sort='-x'),
             color=alt.value("red"))
 
-        positive = alt.Chart(dataframes['positive'], title='Most Common Postive Words used by Twitter User').mark_bar().encode(
+        positive = alt.Chart(dataframes['positive'],
+                             title='Most Common Postive Words used by Twitter User').mark_bar().encode(
             x=alt.X('frequency', title='Number of Occurences'),
             y=alt.Y('Word', sort='-x'),
             color=alt.value("blue"))
 
-        neutral = alt.Chart(dataframes['neutral'], title='Most Common Neutral Words used by Twitter User').mark_bar().encode(
+        neutral = alt.Chart(dataframes['neutral'],
+                            title='Most Common Neutral Words used by Twitter User').mark_bar().encode(
             x=alt.X('frequency', title='Number of Occurences'),
             y=alt.Y('Word', sort='-x'),
             color=alt.value("orange"))
-        
+
         separate_plot = positive | neutral | negative
         return separate_plot
 
