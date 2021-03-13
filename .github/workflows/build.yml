@@ -1,6 +1,13 @@
 name: build
 
-on: [push, pull_request]
+on:
+  # Trigger the workflow on push or pull request to main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
