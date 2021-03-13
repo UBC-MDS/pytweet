@@ -23,7 +23,8 @@ jobs:
       run: poetry run flake8 --exclude=docs* --max-line-length 120
     - name: Test with pytest
       run: |
-        poetry run pytest --cov=./ --cov-report=xml
+        poetry run pytest tests/test_plot_timeline.py tests/test_plot_hashtags.py \
+        tests/test_tweet_sentiment_analysis.py tests/test_visualize_sentiments.py --cov=./ --cov-report=xml
     - name: Upload coverage to Codecov  
       uses: codecov/codecov-action@v1
       with:
