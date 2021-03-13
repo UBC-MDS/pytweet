@@ -7,8 +7,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest]
-        python-version: [3.7, 3.8]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [3.8]
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -20,7 +20,7 @@ jobs:
         pip install poetry
         poetry install
     - name: Check style
-      run: poetry run flake8 --exclude=docs*
+      run: poetry run flake8 --exclude=docs* --max-line-length 120
     - name: Test with pytest
       run: |
         poetry run pytest --cov=./ --cov-report=xml
