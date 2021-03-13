@@ -15,6 +15,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.stem import SnowballStemmer
 from sklearn.feature_extraction.text import CountVectorizer
 nltk.download('stopwords')
+nltk.downloader.download('vader_lexicon')
 
 
 def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
