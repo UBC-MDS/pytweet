@@ -1,5 +1,5 @@
 import pandas as pd
-from pytweet.pytweet import tweet_sentiment_analysis
+from pytweet.pytweet import tweet_sentiment_analysis, get_tweets
 from pytest import raises
 
 
@@ -8,7 +8,8 @@ def test_tweet_sentiment_analysis():
     Test existing functionalities of tweet_sentiment_analysis(),
     which supposed to be a dataframe with semetiment results
     """
-    data = pd.read_csv("tests/brunomars_data.csv")
+    # data = pd.read_csv("tests/brunomars_data.csv")
+    data = get_tweets('@BrunoMars', n_tweets=200)
     data = data[["time", "tweet"]]
     result = tweet_sentiment_analysis(data)
 
