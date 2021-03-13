@@ -82,7 +82,7 @@ tweet_sentiment_analysis(tweet_data)
 Sentiment_df = pytweet.tweet_sentiment_analysis(tweet_data)
 visualize_sentiment(Sentiment_df)
 ```
-<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/visualize_sentiment_plot.png" width="700">
+<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/visualize_sentiment_plot.png" width="600">
 
 ## Documentation
 
