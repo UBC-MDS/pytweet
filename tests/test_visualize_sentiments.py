@@ -1,5 +1,5 @@
-# import pandas as pd
-from pytweet.pytweet import tweet_sentiment_analysis, visualize_sentiment, get_tweets
+import pandas as pd
+from pytweet.pytweet import tweet_sentiment_analysis, visualize_sentiment
 from pytest import raises
 
 
@@ -12,10 +12,9 @@ def test_visualize_sentiments():
         The test should pass and no asserts should be displayed.
     """
     # Get test dataset
-    # data = pd.read_csv("tests/brunomars_data.csv")
-    # data2 = pd.read_csv("tests/brunomars_data.csv")
-    data = get_tweets('@BrunoMars', n_tweets=200)
-    data2 = get_tweets('@BrunoMars', n_tweets=200)
+    data = pd.read_csv("tests/brunomars_data.csv")
+    data2 = pd.read_csv("tests/brunomars_data.csv")
+
     # Run sentiment analysis
     sentiment = tweet_sentiment_analysis(data)
 

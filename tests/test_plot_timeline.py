@@ -1,5 +1,5 @@
-# import pandas as pd
-from pytweet.pytweet import plot_timeline, get_tweets
+import pandas as pd
+from pytweet.pytweet import plot_timeline
 from pytest import raises
 
 
@@ -12,8 +12,7 @@ def test_plot_timeline():
         The test should pass and no asserts should be displayed.
     """
     # Calling helper function to create data
-    # data = pd.read_csv("tests/brunomars_data.csv")
-    data = get_tweets('@BrunoMars', n_tweets=200)
+    data = pd.read_csv("tests/brunomars_data.csv")
 
     # Test the Exception is correctly raised when the type of
     # arguments are wrong

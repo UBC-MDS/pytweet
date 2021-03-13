@@ -1,5 +1,5 @@
-# import pandas as pd
-from pytweet.pytweet import plot_hashtags, get_tweets
+import pandas as pd
+from pytweet.pytweet import plot_hashtags
 from pytest import raises
 
 
@@ -13,7 +13,7 @@ def test_plot_hashtags():
     """
     # Calling helper function to create data
     # data = pd.read_csv("tests/brunomars_data.csv")
-    data = get_tweets('@BrunoMars', n_tweets=200)
+    data = pd.read_csv("tests/brunomars_data.csv")
 
     # Test the Exception is correctly raised when the type of
     # arguments are wrong
