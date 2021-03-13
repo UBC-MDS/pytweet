@@ -6,11 +6,11 @@ from pytweet import __version__
 from tweepy import TweepError
 from pytweet.pytweet import get_tweets, plot_timeline, plot_hashtags, tweet_sentiment_analysis, visualize_sentiment
 from pytest import raises
-# import pytest
-import re
+
 
 def test_version():
     assert __version__ == '0.1.0'
+
 
 def test_get_tweets():
     """
@@ -70,7 +70,7 @@ def test_get_tweets_error():
 
     # test non-existent user
     with raises(TweepError):
-        result = get_tweets('A%@F)UFJSL', n_tweets=20)
+        get_tweets('A%@F)UFJSL', n_tweets=20)
 
 
 def helper_create_data():
@@ -88,6 +88,7 @@ def helper_create_data():
     """
     tweet_data = pd.read_csv("./tests/brunomars_data.csv")
     return tweet_data
+
 
 def test_plot_timeline():
     """
@@ -118,6 +119,7 @@ def test_plot_timeline():
     assert plot.encoding.y.shorthand == 'count()', 'y_axis should be mapped to the y axis'
     assert plot.mark == 'line', 'mark should be a line'
 
+
 def test_plot_hashtags():
     """
     Tests the hashtags function to make sure the outputs are correct.
@@ -147,6 +149,7 @@ def test_plot_hashtags():
     assert plot.encoding.y.shorthand == 'Keyword', 'y_axis should be mapped to the y axis'
     assert plot.mark == 'bar', 'mark should be a bar'
 
+
 def test_tweet_sentiment_analysis():
     """
     Test existing functionalities of tweet_sentiment_analysis(),
@@ -165,6 +168,7 @@ def test_tweet_sentiment_analysis():
 
     # make sure the output is not empty.
     assert len(result) > 0
+
 
 def test_tweet_sentiment_analysis_error():
     """

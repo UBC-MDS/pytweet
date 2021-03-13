@@ -7,7 +7,6 @@ import pandas as pd
 import altair as alt
 import re
 from datetime import datetime
-from tweepy import TweepError
 from textblob import TextBlob
 import numpy as np
 import nltk
@@ -16,6 +15,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.stem import SnowballStemmer
 from sklearn.feature_extraction.text import CountVectorizer
 nltk.download('stopwords')
+
 
 def get_tweets(handle, n_tweets=-1, include_replies=False, verbose=True):
     """
@@ -184,6 +184,7 @@ def plot_hashtags(df, text_col):
 
     return hashtag_plot
 
+
 def tweet_sentiment_analysis(tweets):
     """
     This function examine and categorize each tweet in the dataframe
@@ -227,6 +228,7 @@ def tweet_sentiment_analysis(tweets):
 
     return tweets_senti
 
+
 def text_cleaning(text):
     """
     This helper function cleans the tweet text. The cleaning process includes:
@@ -249,9 +251,10 @@ def text_cleaning(text):
     ps = SnowballStemmer('english')
     text_lc = "".join([word.lower() for word in text if word not in string.punctuation])  # remove puntuation
     text_rc = re.sub('[0-9]+', '', text_lc)
-    tokens = re.split('\W+', text_rc)    # tokenization
+    tokens = re.split(r'\W+', text_rc)    # tokenization
     text = [ps.stem(word) for word in tokens if word not in stopword]  # remove stopwords and stemming
     return text
+
 
 def visualize_sentiment(sentiment_df, plot_type="Standard"):
     """

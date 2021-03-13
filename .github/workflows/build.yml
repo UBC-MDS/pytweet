@@ -20,7 +20,7 @@ jobs:
         pip install poetry
         poetry install
     - name: Check style
-      run: poetry run flake8 --exclude=docs*
+      run: poetry run flake8 --exclude=docs* --max-line-length 120
     - name: Test with pytest
       run: |
         poetry run pytest --cov=./ --cov-report=xml
