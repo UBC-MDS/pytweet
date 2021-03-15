@@ -4,7 +4,6 @@ version = "0.1.4"
 description = "Python package for text analysis and sentiment analysis on tweets"
 authors = ["mmyz <yzmarco.ma@gmail.com>"]
 license = "MIT"
-
 readme = "README.md"
 homepage = "https://github.com/UBC-MDS/pytweet"
 repository = "https://github.com/UBC-MDS/pytweet"
