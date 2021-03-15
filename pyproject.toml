@@ -5,6 +5,11 @@ description = "Python package for text analysis and sentiment analysis on tweets
 authors = ["mmyz <yzmarco.ma@gmail.com>"]
 license = "MIT"
 
+readme = "README.md"
+homepage = "https://github.com/UBC-MDS/pytweet"
+repository = "https://github.com/UBC-MDS/pytweet"
+documentation = 'pytweet-ubcmds.readthedocs.io'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 pandas = "^1.2.3"
