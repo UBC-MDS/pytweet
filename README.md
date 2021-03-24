@@ -86,7 +86,7 @@ visualize_sentiment(Sentiment_df)
 
 ## Documentation
 
-The official documentation is hosted on Read the Docs: https://pytweet.readthedocs.io/en/latest/
+The official documentation is hosted on Read the Docs: https://pytweet-ubcmds.readthedocs.io/en/latest/
 
 ## Contributors
 
