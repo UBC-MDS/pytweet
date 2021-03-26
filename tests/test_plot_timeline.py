@@ -3,7 +3,6 @@ from pytweet.pytweet import plot_timeline
 from pytest import raises
 
 
-
 def test_plot_timeline():
     """
     Tests the plot_timeline function to make sure the outputs are correct.
@@ -13,7 +12,7 @@ def test_plot_timeline():
         The test should pass and no asserts should be displayed.
     """
     # Calling helper function to create data
-    data = pd.read_csv("tests/brunomars_data.csv",parse_dates=['time'])
+    data = pd.read_csv("tests/brunomars_data.csv", parse_dates=['time'])
 
     # Test the Exception is correctly raised when the type of
     # arguments are wrong
