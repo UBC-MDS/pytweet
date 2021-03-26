@@ -1,6 +1,6 @@
 # pytweet 
 
-![](https://github.com/mmyz88/pytweet/workflows/build/badge.svg) [![codecov](https://codecov.io/gh/mmyz88/pytweet/branch/main/graph/badge.svg)](https://codecov.io/gh/mmyz88/pytweet) ![Release](https://github.com/mmyz88/pytweet/workflows/Release/badge.svg) [![Documentation Status](https://readthedocs.org/projects/pytweet/badge/?version=latest)](https://pytweet.readthedocs.io/en/latest/?badge=latest)
+![](https://github.com/mmyz88/pytweet/workflows/build/badge.svg) [![codecov](https://codecov.io/gh/UBC-MDS/pytweet/branch/main/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/pytweet) [![Deploy](https://github.com/UBC-MDS/pytweet/actions/workflows/deploy.yml/badge.svg)](https://github.com/UBC-MDS/pytweet/actions/workflows/deploy.yml) [![Documentation Status](https://readthedocs.org/projects/pytweet/badge/?version=latest)](https://pytweet-ubcmds.readthedocs.io/en/latest/)
 
 ## Package Overview           
 `pytweet` is a python package for text analysis and sentiment analysis on tweets. The package will allow you to extract tweets from Twitter, visualize user habit on tweet posting, and apply sentiment analysis to the data.        
@@ -9,6 +9,7 @@
 
 - `get_tweets`:              
     - This function extracts tweets from a Twitter user given their handle (i.e. @elonmusk). 
+    - NOTE: this function requires Twitter API credentials stored as environment variables. Please see this guide on [how to obtain access](https://cran.r-project.org/web/packages/rtweet/vignettes/auth.html).
 
 - `plot_timeline`:             
     - This function creates an analysis of what time of day the tweets occurs and plots the counts of tweets and hours. 
@@ -32,7 +33,15 @@ $ pip install -i https://test.pypi.org/simple/ pytweet
 
 ## Dependencies
 
-- TODO
+- python = "^3.8"
+- pandas = "^1.2.3"
+- altair = "^4.1.0"
+- DateTime = "^4.3"
+- tweepy = "^3.10.0"
+- textblob = "^0.15.3"
+- sklearn = "^0.0"
+- nltk = "3.5"
+- strings = "0.1.2"
 
 ## Usage
 ```Python
@@ -52,19 +61,32 @@ pytweet.get_tweets('@BrunoMars', n_tweets=8)
 > 6  2021-03-02 19:32:41  Lacoste: “Bruno, if you want the clothes to se...
 > 7  2021-03-02 16:03:35  Alright i’ll be back. I gotta go approve some ...
 ```
+
 ```Python
 tweet_data = pytweet.get_tweets('@BrunoMars', n_tweets=500)
 pytweet.plot_timeline(tweet_data, 'time')
 ```
-![](./img/timeline_plot.png)
+<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/timeline_plot.png" width="500">
 
 ```Python
 pytweet.plot_hashtags(tweet_data, 'tweet')
 ```
-![](./img/hashtag_plot.png)
+<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/hashtag_plot.png" width="500">
+
+```Python
+tweet_sentiment_analysis(tweet_data)
+```
+<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/sentiment_analysis_example.png" width="800">
+
+```Python
+Sentiment_df = pytweet.tweet_sentiment_analysis(tweet_data)
+visualize_sentiment(Sentiment_df)
+```
+<img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/visualize_sentiment_plot.png" width="600">
+
 ## Documentation
 
-The official documentation is hosted on Read the Docs: https://pytweet.readthedocs.io/en/latest/
+The official documentation is hosted on Read the Docs: https://pytweet-ubcmds.readthedocs.io/en/latest/
 
 ## Contributors
 
