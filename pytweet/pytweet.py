@@ -6,7 +6,6 @@ import os
 import pandas as pd
 import altair as alt
 import re
-from datetime import datetime
 from textblob import TextBlob
 import numpy as np
 import nltk
