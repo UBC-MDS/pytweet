@@ -28,7 +28,7 @@ There are a few existing Python packages that perform tweets text analysis and s
 ## Installation
 
 ```bash
-$ pip install -i https://test.pypi.org/simple/ pytweet
+$ pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple pypkgs
 ```
 
 ## Dependencies
@@ -45,7 +45,7 @@ $ pip install -i https://test.pypi.org/simple/ pytweet
 
 ## Usage
 ```Python
-import pytweet
+from pytweet import pytweet
 import pandas as pd
 
 pytweet.get_tweets('@BrunoMars', n_tweets=8)
@@ -74,13 +74,13 @@ pytweet.plot_hashtags(tweet_data, 'tweet')
 <img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/hashtag_plot.png" width="500">
 
 ```Python
-tweet_sentiment_analysis(tweet_data)
+pytweet.tweet_sentiment_analysis(tweet_data)
 ```
 <img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/sentiment_analysis_example.png" width="800">
 
 ```Python
 Sentiment_df = pytweet.tweet_sentiment_analysis(tweet_data)
-visualize_sentiment(Sentiment_df)
+pytweet.visualize_sentiment(Sentiment_df)
 ```
 <img src="https://raw.githubusercontent.com/UBC-MDS/pytweet/main/img/visualize_sentiment_plot.png" width="600">
 

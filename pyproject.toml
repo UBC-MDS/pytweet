@@ -2,7 +2,7 @@
 name = "pytweet"
 version = "0.1.9"
 description = "Python package for text analysis and sentiment analysis on tweets"
-authors = ["mmyz <yzmarco.ma@gmail.com>"]
+authors = ["Huanhuan Li, Marco Ma, Jared Splinter, Yuan Xiong"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/UBC-MDS/pytweet"
