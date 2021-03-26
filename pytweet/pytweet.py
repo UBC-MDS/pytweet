@@ -6,7 +6,6 @@ import os
 import pandas as pd
 import altair as alt
 import re
-from datetime import datetime
 from textblob import TextBlob
 import numpy as np
 import nltk
@@ -123,7 +122,6 @@ def plot_timeline(df, time_col):
         raise Exception("The value of the argument 'time_col' must be type of string")
 
     # extract hour from time column
-    df['time'] = df[time_col].apply(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S"))
     df['hour'] = df['time'].apply(lambda x: x.hour)
 
     # timeline plot

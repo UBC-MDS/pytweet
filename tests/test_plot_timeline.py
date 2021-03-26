@@ -12,7 +12,7 @@ def test_plot_timeline():
         The test should pass and no asserts should be displayed.
     """
     # Calling helper function to create data
-    data = pd.read_csv("tests/brunomars_data.csv")
+    data = pd.read_csv("tests/brunomars_data.csv", parse_dates=['time'])
 
     # Test the Exception is correctly raised when the type of
     # arguments are wrong
