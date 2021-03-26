@@ -1,5 +1,5 @@
 import pandas as pd
-from pytweet.pytweet import plot_timeline, get_tweets
+from pytweet.pytweet import plot_timeline
 from pytest import raises
 
 
